@@ -1,0 +1,1309 @@
+/*****************************************************************************
+ *  iMapBook eReader
+ *  iMapBook LLC
+ *  All Rights Reserved
+ *  10/05/2016
+ * 
+ *  Version 2.7
+ *
+ * This contains the structural CSS information (i.e., the layout and placement
+ * of component, but not colours and such)
+ * 
+ * Screen sizes: 28em (<448px is likely a phone)
+ *				 35em (<560px is edge of most phones in landscape mode)
+ *				 45em (<720px is likely point at which we move to non-mobile)
+ *****************************************************************************/
+@CHARSET "ISO-8859-1";
+a:link {
+    text-decoration: none;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    background-color: #FFFF00;
+    color: #000;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    display: block;
+    visibility: hidden;
+    width: 120px;
+    background-color: #FFFF00;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover {
+    cursor: pointer;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+
+#title_page {
+	width	: 100%;
+	height	: 100%;
+}
+
+.imb_background_logo {
+    background-image	: url('../data/images/logo.jpg');
+    background-repeat	: no-repeat;
+    background-position	: center;
+    background-size		: contain;
+}
+
+label.input_error {
+	text-align	: center;
+}
+
+span.input_error {
+	display		: inline-block;
+	width		: 100%;
+	padding		: 0.4em 0 0;
+	text-align	: center;
+}
+
+/*****************************************************************************
+ * LOGIN / REGISTRATION PAGE - BEGIN
+ *****************************************************************************/
+
+#login_page, #register_page {
+	position	: relative;
+	max-width	: 35em;
+	margin		: auto;
+	text-align	: center;
+}
+
+#login_heading, #register_heading {
+	width	: 100%;
+	height	: 30vh; /* roughly a third of the mobile screen */
+}
+
+.login_field {
+	font-size: 1.2em;
+}
+
+/* make some adjustments for larger screens */
+@media (min-width : 28em) {
+	#login_heading {
+		height: 40vh;
+	}
+	#register_heading {
+		height: 30vh;
+	}
+
+	/* jQuery left-aligns labels at 28em, so override the old text-alignment */
+	#login_page, #register_page {
+		text-align: left;
+	}
+}
+
+@media (min-width : 35em) {
+	#login_heading {
+		height: 50vh;
+	}
+}
+ 
+/*****************************************************************************
+ * LOGIN /REGISTRATION PAGE - END
+ *****************************************************************************/
+ 
+ 
+/*****************************************************************************
+ * BOOKSHELF PAGE - BEGIN
+ *****************************************************************************/
+
+#bookshelf_page {
+	/*width	: 100%;
+	height	: 100%;*/
+	/* shelf_wall makes the bottom of short pages look good */
+	background		: transparent url("../data/images/shelf_wall.jpg") left bottom repeat;
+    background-size	:752px 260px;
+}
+
+#bookshelf_heading {
+	display: flex;
+	flex-direction: column;
+}
+
+#imb_bookshelf_logo {
+	display		: block;
+	max-width	: 100%;
+	max-height	: 19em;
+	margin		: auto;
+}
+
+@media (min-width : 35em) {
+	#bookshelf_heading {
+		flex-direction: row;
+	}
+	#imb_bookshelf_logo {
+		margin	: 0;
+	}
+}
+
+#bookshelf_welcome {
+	text-align	: center;
+	margin		: 0 0 0.5em;
+}
+
+/* the credits and achievements headings are stacked in the mobile version */
+#bookshelf_achievement_credits {
+	margin				: 0.5em 0;
+	padding				: 0 0 0.5em;
+    text-align			: center;
+	border-bottom-width : 1px; /* color is inherited */
+	border-bottom-style : solid;
+}
+#bookshelf_achievement_header {
+	display		: block;
+	font-size	: 1.2em;
+	font-weight	: bold;
+    text-align	: center;
+}
+#bookshelf_achievement_head_padding {
+	padding : 0.5em 0; 
+}
+
+@media (min-width : 28em) and (max-width : 34.9em),
+(min-width : 45em) {
+	/* credits and achievements headings are changed to be on the same line */
+	#bookshelf_achievement_credits {
+		float		: right;
+		padding		: 0;
+		margin		: 0;
+		text-align	: left;
+		border		: none;
+	}
+	#bookshelf_achievement_header {
+		text-align	: left;
+	}
+	#bookshelf_achievement_head_padding {
+		padding		: 0.5em 1em;
+	}
+}
+
+#bookshelf_container {
+    padding	: 0;
+	margin	: 0;
+}
+
+.sort_button {
+	margin	: 0;
+}
+
+.small_bookshelf_background {
+    background	: transparent url("../data/images/grey_shelf2.jpg") bottom;
+    padding		: 25px 10px 35px;
+}
+
+#bookshelf_book_list {
+    background		: transparent url("../data/images/shelf.jpg") left top repeat;
+    background-size	: 752px 260px;
+	text-align		: center; /* to center the book divs */
+}
+
+.bookshelf_book_container {
+	display	: inline-block;
+	position: relative;
+	width	: 10em;
+	height	: 245px;
+	margin	: auto;
+	padding	: 5px 10px;
+	overflow: hidden;
+	clear	: both;
+}
+
+/* settings for the books on each shelf */
+.bookshelf_book_button {
+	border			: none !important;
+	background-color: transparent !important;
+	padding-top		: 0;
+	margin-top		: 0;
+	border-radius	: 10px;
+}
+
+.bookshelf_book_image {
+    width			: 128px; 
+    height			: 170px;
+    background-image: url("../data/images/book.png");
+    padding			: 0;
+	margin			: -10px auto 0;
+}
+.bookshelf_book_container:hover {
+	filter			: brightness(140%);
+}
+
+.bookshelf_book_cover_image {
+    position		: relative;
+    width			: 90px;
+    height			: 90px;
+    top				: 10px;
+    margin-left		: 30px;
+    background-size	: 90px 90px;
+    background-repeat: no-repeat
+}
+
+.bookshelf_book_cover_data {
+    position	: relative;
+    width		: 90px;
+    height		: 50px;
+    top			: 15px;
+    margin-left	: 30px;
+    text-align	: left;
+	
+	font-size	: 0.8em;
+	text-shadow : none;
+    /*color: #AAAAAA;
+    font-family: Arial, sans-serif;
+    font-size: small;*/
+}
+
+.bookshelf_book_title {
+    margin-top	: 0;
+    text-align	: center;
+    white-space	: normal; 
+    overflow	: hidden; 
+    height		: 2.4em; 
+}
+
+/*****************************************************************************
+ * BOOKSHELF PAGE - END
+ *****************************************************************************/
+
+
+/*****************************************************************************
+ * BOOKSHELF POPUP BOOK - START
+ *****************************************************************************/
+
+#summary_popup {
+    border			: none;
+    width			: calc(100vw - 3em);
+	max-width		: 896px;
+    height			: calc(100vh - 2em);
+    margin			: auto;
+	background-color: transparent;
+}
+
+@media (min-width : 28em) and (max-width: 34.9em) {
+	#summary_popup {
+		font-size: 1.1em;
+	}
+}
+@media (min-width : 35em) {
+	#summary_popup {
+		font-size: 1.2em;
+	}
+}
+@media (min-width : 45em) {
+	#summary_popup {
+		font-size: 1.4em;
+	}
+}
+
+#summary_popup_bg {
+	width: 100%;
+	height: 100%;
+}
+
+#summary_contents {
+    position:absolute;
+    margin-left:5%;
+    margin-top:2%;
+    margin-right:5%;
+    margin-bottom:2%;
+	left: 0;
+	right:0;
+	top: 0;
+	bottom: 0;
+    height:95%;
+}
+
+#summary_left_page {
+	position: relative;
+    width: 50%;
+	height: 100%;
+	padding: 0 3% 0 1%;
+	overflow: hidden;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.summary_title {
+	font-size: 1.2em;
+	margin: 0.5em 0;
+}
+
+.summary_author {
+	color: blue;
+	font-size: 1em;
+}
+
+.summary_abstract {
+	font-size: 0.8em;
+	text-align: left;
+}
+
+#summary_right_page {
+	position: relative;
+    width:50%;
+	height: 100%;
+    color:black;
+    font-size:0.8em;
+	padding: 0 1% 0 3%;
+    text-align: left;
+	overflow: hidden;
+    white-space: normal;
+}
+
+.summary_page_preview {
+	text-overflow: ellipses;
+	overflow: hidden;
+	height: 70%;
+}
+
+.bookmark {
+	position: absolute;
+	bottom: 0;
+	width: 94%; /* excludes paddings */
+	font-size: 16px; /* reset the font, given different sizes for the whole summary */
+}
+
+.summary_btn {
+	width: calc(100% - 2px - 2.625em); /* full width removing border, padding, and margin */
+	/*font-size: 16px;*/
+}
+
+/****************************
+START - Resizing Close Popup Button 
+*****************************/
+/*#imb_popup_book_close_button.ui-btn-icon-notext {
+    margin-top:-0.5em;
+    margin-right:-0.5em;
+} 
+
+#imb_popup_book_close_button.ui-btn-icon-notext {
+    height: 44px;
+    width: 44px;
+}*/
+
+#summary_btn_exit {
+	font-size: 1.2em;
+}
+
+#summary_btn_exit.ui-btn-corner-all {
+    border-radius:5em;
+    border:none;
+}
+
+#summary_btn_exit .ui-icon {
+    background: url("../scripts/images/icons-36-white.png") no-repeat scroll 0% 0% rgba(0,0,0,0.4);
+}  
+
+#summary_btn_exit .ui-icon-delete.ui-icon-shadow {
+    background-image: url("../scripts/images/icons-36-white.png") no-repeat scroll 0% 0% rgba(0,0,0,0.4);
+    background-position: -144px 50%;
+    width:36px;
+    height:36px;
+    border-radius:18px;
+}  
+
+#summary_btn_exit.ui-btn-icon-notext .ui-btn-inner .ui-icon {
+    margin: 3px 1px 2px 4px;
+}
+
+/*****************************************************************************
+ * BOOKSHELF POPUP BOOK - END
+ *****************************************************************************/
+
+ 
+/*****************************************************************************
+ * BOOK AND TEXT PAGE - START
+ *****************************************************************************/
+
+#imb {
+	bottom: 2px;
+}
+
+/* -------------------------------- HEADER -------------------------------- */
+
+#imb_header,
+#imb_header_mobile {
+    height: 47px;
+    -webkit-user-drag: none;
+	overflow: hidden;
+}
+
+#imb_header_info {
+	height: 100%;
+ 	margin: auto;
+	font-size: 1.2em;
+}
+
+/* headers for mobile devices */
+#imb_header {
+	display: none;
+}
+#imb_header_mobile {
+	display: flex;
+}
+#imb_header_mobile h2 {
+	width: 100%;
+	margin-left: 0.5em;
+	margin-right: 15%;
+}
+#imb_header_options {
+	display: block;
+	border-right-style: solid;
+	border-right-width:	1px;
+}
+#imb_header_nav {
+	display: block;
+}
+/* by default always hide the navigation bar */
+#imb_mobile_nav_bar {
+	display: none;
+}
+/* headers for normal-sized devices */
+@media (min-width : 35em) {
+	#imb_header {
+		display: flex;
+	}
+	#imb_header_mobile {
+		display: none !important;
+	}
+}
+
+#imb_btn_profile {
+	padding: 2px;
+	height: 44px;
+	margin: 1px 5px 1px 2px;
+}
+#imb_profile_image {
+	height: 38px;
+	width: auto;
+}
+#imb_btn_social_open {
+	margin: 5px;
+}
+#imb_gold_coins, #imb_silver_coins {
+    margin: 3px 5px 0;
+}
+#imb_gold_coins img, #imb_silver_coins img {
+	height: 15px;
+	width: auto;
+}
+#imb_gold_count, #imb_silver_count {
+    margin: auto 10px;
+}
+
+/* -------------------------------- FOOTER -------------------------------- */
+#imb_footer {
+    height: 40px;
+    -webkit-user-drag: none;
+	overflow: hidden;
+}
+
+#imb_btn_page_next, #imb_btn_page_last {
+	border-radius: 10px;
+}
+
+.button_animate {
+	/* TODO: there is a CSS animation style that can be used here for animating the color */
+}
+
+@media (min-device-width: 360px) {
+	#imb_footer_content {
+		font-size: 16px;
+	}
+}
+
+#imb_footer_content {
+	float: left;
+	text-align: center;
+	width: calc(100% - 100px);
+	padding-top: 10px;
+	font-size: 13px;
+}
+#imb_footer_content div {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+#imb_footer_content .ui-block-a {
+	width: 30%;
+}
+#imb_footer_content .ui-block-b {
+	width: 45%;
+}
+#imb_footer_content .ui-block-c {
+	width: 25%;
+}
+
+/*
+#imb_footer_info {
+    font-weight: bold;
+    font-style: italic;
+    text-align: right;
+    margin-top: 10px;
+    width: 40%;
+}
+#imb_footer_data {
+    font-weight: bold;
+    text-align: left;
+    margin-top: 10px;
+    width: 40%;
+}*/
+/*
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px){
+    #imb_footer_data {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-style: italic;
+        font-size: 10pt;
+        color: #AAAAAA;
+        text-align: left;
+        margin-top: 10px;
+        width: 20%;
+        visibility: hidden;
+    }
+}*/
+
+#imb_footer_page_progress {
+    float: left;
+    margin-top: 3px;
+    margin-right: 5px;
+	width: calc(100% - 8em);
+	height: 14px;
+}
+#imb_footer_page_timeout {
+    float: left;
+    margin-left: 20px;
+    width: 20px;
+}
+#imb_footer_timer {
+    float: left;
+    margin-left: 20px;
+    width: 20px;
+}
+#imb_footer_countdown {
+    float: left;
+    margin-left: 20px;
+    width: 20px;
+}
+
+ /*****************************************************************************
+ * BOOK AND TEXT PAGE - END
+ *****************************************************************************/
+
+ /*****************************************************************************
+ * GAME PAGE - START
+ *****************************************************************************/
+ 
+ 
+#imb_game {
+    /*position: fixed;*/
+    width: 100%;
+	height: 100%;
+    /*height: calc(100vh - 91px);*/ /* fullview - (header + footer) */
+	margin: 0;
+    padding: 0;
+    border: 0;
+}
+#imb_graphic {
+	position: relative;
+    padding: 0;
+	margin: 0;
+	text-align: center;
+	
+    /*position: fixed;
+    width: 100%;
+    height: calc(100vh - 91px);
+    margin: auto;
+	margin-bottom: 0;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+	
+	vertical-align: middle;
+	padding:0;
+	overflow:hidden;
+	object-fit: fill;*/
+}
+
+.game_graphics_container_partial {
+    width: 50%;
+    height: 60%;
+}
+
+.game_graphics_container_full {
+    width: 100%;
+    height: calc(100vh - 91px);
+}
+
+#imb_graphic {
+	position: relative;
+    padding: 0;
+	margin: 0;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+	
+	/*position: relative;
+    width: 60%;
+    height: 60%;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center 0;*/
+}
+
+#imb_game_messages_container {
+	position: absolute;
+	top: 0;
+	right: 0;
+	/* width and height take into account the 1em padding and the border */
+	width: calc(50% - 2em - 1px);
+	overflow-x: hidden;
+	overflow-y: scroll;
+	margin: 0;
+	padding: 1em;
+	list-style: none;
+	border-left: 1px solid;
+}
+
+.imb_game_messages_partial {
+	height: calc(60% - 2em - 1px);
+	border-bottom: 1px solid;
+}
+
+.imb_game_messages_full {
+	height: calc(100% - 2em);
+}
+
+#imb_game_controls_container {
+	width: calc(100% - 0.4em);
+    margin: 0.2em;
+    padding: 0;
+    overflow: auto;
+}
+.imb_game_controls_partial {
+    height: calc(40% - 0.4em);
+}
+.imb_game_controls_full {
+    height: calc(100% - 2em);
+	margin: 1em;
+}
+
+/* ----------------------------------------------------------- GAME_DISPLAY */
+#imb_game_display {
+    width: 100%;
+    height: 50%;
+}
+#imb_game_display_image {
+    position: relative;
+    width: 45%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.imb_hotspot {
+    position: absolute;
+    /* border-radius: 50%; */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.imb_draggable {
+    position: absolute;
+    /* border-radius: 50%; */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-user-drag: element;
+}
+.imb_dragged {
+    /* border-radius: 50%; */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.imb_container {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+/* ----------------------------------------------------------- GAME_DISPLAY_CONTENT */
+#imb_game_display_content {
+    width:55%;
+    height: 100%;
+}
+/* ----------------------------------------------------------- GAME_DISPLAY_CONTENT_TOP */
+#imb_game_display_content_top {
+    width: 100%;
+    height: 85%;
+}
+#imb_game_display_content_top_text {
+    width: 100%;
+    height: 100%;
+    /*font-family: Comic Sans MS;
+    font-size: 14pt;
+    color: #00FF00;
+    background-color: #000000;*/
+    resize: none;
+    border: none;
+    outline: none;
+    overflow: auto;
+    margin-left: 2px;
+}
+
+/* ----------------------------------------------------------- GAME_DISPLAY_CONTENT_BOTTOM */
+#imb_game_display_content_bottom { /* TODO: update this */
+    /*width: 100%;*/
+    height: 2.2em; /*15%;*/
+    /*background-color: #000000;*/
+    border: 3px ridge;
+    margin: 0.5em 1.0em;
+    border-radius: 10px;
+}
+
+#imb_game_display_content_bottom_text {
+    width: calc(100% - 2em);
+    height: 100%;
+    overflow: hidden;
+    /*font-family: Comic Sans MS;
+    font-size: large;
+    color: #FFFF99;
+    background-color: #000000;
+    border: none;
+    outline: none;*/
+	padding: 0.5em 0.2em 0;
+}
+
+#imb_game_display_content_bottom_buttons {
+    width: 2em;
+    height: 100%;
+    overflow: hidden;
+    /*color: #FFFF99;
+    background-color: #000000;*/
+    border: none;
+    outline: none;
+}
+
+#imb_btn_mic {
+    width: calc(100% - 0.4em);
+    height: calc(100% - 0.4em);
+    background-image: url("../data/icons/mic-off.png");
+    background-repeat: no-repeat;
+    background-size: contain; /* 90% 70%;*/
+	background-position: center;
+	margin: 0.2em;
+}
+
+/* ----------------------------------------------------------- GAME_WORDS */
+#imb_game_words {
+    width: 100%;
+    height: 40%;
+}
+#imb_game_words_matrix {
+    font-size: large;
+    margin-top: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: center;
+    /*color: #FFFF99;*/
+}
+
+
+.imb_agent {
+    float: left;
+    margin-right:2%;
+    margin-bottom: 2%;
+    width: 320px;
+    height: 240px;
+}
+
+ /*****************************************************************************
+ * GAME PAGE - END
+ *****************************************************************************/
+
+#popupMessage, #popupDialogLast, #popupDialogNext {
+	max-width: 400px;
+}
+ 
+.imb_button {
+    font-size: x-small;
+    text-align: center;
+}
+
+
+.imb_input_key {
+    color: #000000;
+    font-size: medium;
+}
+
+.imb_text_key {
+    color: #000000;
+    font-size: medium;
+}
+
+.imb_key {
+    font-size: medium;
+    font-weight: bold;
+    margin-left: 2px;
+    padding: 8px 8px;
+    border: solid #444444;
+    -webkit-appearance: none;
+    background: #212121;
+}
+.imb_key:hover {
+    background: #777777;
+}
+.imb_key:active {
+    background: #222222;
+}
+
+.defWord {
+    background-color: #FFFF00;
+    font-weight: bold;
+}
+.defWord:hover {
+    cursor: pointer;
+}
+
+p.imb_text1 {
+    width: 100%;
+    height: 90%;
+    margin: auto;
+    overflow: auto;
+    font-family: Arial, sans-serif;
+    line-height: 2em;
+    font-size: 14pt;
+}
+
+p.imb_text2 {
+    width: 80%;
+    padding-top: 2%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 15px;
+    font-size: 14pt;
+}
+
+p.imb_text3 {
+    width: 600px;
+    height: 90%;
+    margin: auto;
+    overflow: auto;
+    font-family: Arial, sans-serif;
+    line-height: 2em;
+    font-size: 14pt;
+}
+
+/*Implemented by Alex 5/15*/
+p.page_text{
+    margin:0;
+    padding:0;
+    line-height:30px;   /*25px*/
+}
+span.page_tab{
+    padding:40px;
+}
+
+#page_paragraph > p{
+    margin:0;
+    padding:0;
+    line-height:30px;
+}
+/*  */
+
+#slideDef {
+    position:absolute;
+    padding: 4px;
+}
+
+#imb_help {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+    text-align: center;
+    display: none;
+}
+
+#imb_popup {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    right: 10%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: medium;
+    text-align: center;
+    display: none;
+}
+
+#imb_popup_text {
+    text-align: left;
+}
+
+#imb_setup {
+	max-width: 600px;
+	border: none;
+	margin: auto;
+    text-align: center;
+}
+
+
+/* ----------------------------------------------------------- PAGE/GAME */
+
+
+#imb_page {
+    position: relative;
+    width: auto;
+    height: calc(100% - 1em);
+    margin: auto;
+    overflow: auto;
+    line-height: 1.5em;
+    padding: 0.5em 1em;
+}
+/*
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px){
+    #imb_page {
+        position: relative;
+        width: 115%;
+        height: 100%;
+        margin: auto;
+        overflow: scroll;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5em;
+        font-size: 12pt;
+        padding:15px 80px;
+        padding-left: 20px;
+        padding-right: 80px;        
+    }
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 720px)
+and (orientation: landscape){
+    #imb_page {
+        position: relative;
+        width: auto;
+        height: 110%;
+        margin: auto;
+        overflow: scroll;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.75em;
+        font-size: 12pt;
+        padding:15px 80px;
+        display: block;
+        padding-left: 20px;
+        padding-right: 80px;        
+        -webkit-overflow-scrolling: touch; 
+        -webkit-transform: translateZ(0px);
+        margin-left: 5%;
+        margin-right: -5%;
+        margin-top: -2%;
+        margin-bottom: 8%;
+    }
+    #imb_header{
+        height: 10%;
+        min-height: 10%;
+    }
+    #imb_footer{
+        height: 10%;
+        min-height: 10%;
+    }
+    #nav_icons{
+        margin-top: 0%;
+    }
+
+    .ui-responsive > .ui-block-a, 
+    .ui-responsive > .ui-block-b, 
+    .ui-responsive > .ui-block-c, 
+    .ui-responsive > .ui-block-d, 
+    .ui-responsive > .ui-block-e{
+        float: right;
+        width: 25%;
+    }
+}
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px){
+    #imb_page {
+        position: relative;
+        width: auto;
+        height: 100%;
+        margin: auto;
+        overflow: scroll;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5em;
+        font-size: 18pt;
+        padding:15px 80px;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}*/
+
+
+
+/*****************************************************************************
+ * SOCIAL COMPONENT
+ *****************************************************************************/
+#social_page h1 {
+	text-align: center;
+	margin-bottom: 5px;
+}
+#social_page header {
+	height: 47px;
+}
+
+#imb_convo_box {
+	position: fixed; /* to fix a strange flow problem */
+	width: calc(100% - 20px);
+	padding: 10px;
+	margin: 0px;
+	background-color: #DDDDDD;
+}
+.imb_convo_box_unstructured {
+	top: 49px;
+	height: calc(100vh - 156px); /* full size of viewport excluding header and footer */
+}
+.imb_convo_box_structured {
+	top: 149px;
+	height: calc(100vh - 165px - 6rem); /* full size of viewport excluding header, discussion topic (4px+4rem), and footer */
+}
+
+#imb_social_input_text {
+	display: inline;
+	width: calc(100% - 9rem);
+	margin-left: 0.5rem;
+	resize: none;
+	height: 68px;
+}
+
+.imb_social_controls {
+	margin-right: 0.5rem;
+}
+
+.ui-btn-force-square {
+	border-radius: 0 !important;
+}
+
+#imb_btn_social_submit ,
+#imb_btn_topic_answer_submit {
+	display: block;
+	width: 7.5rem;
+}
+
+#imb_convo_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#imb_social_topic_container {
+	margin: 0;
+}
+.imb_social_discussion_topic {
+	height: 4rem;
+	width: 90%;
+	margin: 0.5rem auto;
+	padding: 0.5rem 0;
+	text-align: center;
+	font-style: italic;
+	border: 2px black dotted;
+	border-radius: 20px;
+	background-color: aquamarine;
+}
+
+.avatar_selection {
+	width: 100px;
+	height: auto;
+}
+
+.imb_conversation  li {
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 3px;
+	margin-bottom: 10px;
+	min-height: 100px;
+	padding: 0;
+	position: relative;
+	border-radius: 5px;
+}
+
+li.imb_social_msg_left {
+	/*margin-right: 25%;*/
+	margin-left: 110px;
+	background-color: rgb(250,200,70);
+}
+
+li.imb_social_msg_left_full {
+	/*margin-left: 10px;*/
+	background-color: rgb(250,200,70);
+}
+
+li.imb_social_msg_right {
+	margin-right: 110px;
+	/*margin-left: 25%;*/
+	background-color: #44BBBB;
+}
+
+li.imb_social_msg_right_full {
+	/*margin-right: 10px;*/
+	background-color: #44BBBB;
+}
+
+.imb_conversation img {
+	width: 100px;
+	height: 100px;
+	display: inline;
+}
+.chat-name {
+	color: black;
+	font-size: 0.8em;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+.chat-date {
+	color: black;
+	font-size: 0.8em;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.imb_social_msg_left img {
+	position: absolute;
+	left: -110px;
+}
+
+.imb_social_msg_right img {
+	position: absolute;
+	left: 100%;
+	transform: translate(5px, 0);
+}
+
+.imb_conversation p {
+	color: black;
+	padding: 5px;
+	margin: 0px;
+	font-size: 1.3em;
+	text-shadow: 0 0;
+}
+.chat-padded-text {
+	padding: 1.5em 5px 5px !important;
+}
+
+.imb_social_msg_left label,
+.imb_social_msg_left_full label {
+	display: inline;
+	color: black;
+	margin: 0;
+}
+
+.imb_social_msg_right label,
+.imb_social_msg_right_full label {
+	display: inline;
+	color: black;
+	margin: 0;
+	text-align: right;
+}
+
+#imb_social_choose_avatar,
+#imb_profile_dialog {
+	width: 80%;
+	margin: auto;
+	padding: 1em;
+}
+
+.user-avatar-lists li {
+	display: inline;
+	margin: 5px;
+}
+
+/*****************************************************************************
+ * GENERIC HELPER CLASSES
+ *****************************************************************************/
+/* Hide visually and from screen readers; remove from DOM layout */
+.display_remove {
+	display: none !important;
+}
+
+/* Hide visually and from screen readers, but maintain DOM layout */
+.display_invisible {
+	visibility: hidden !important;
+}
+
+/* Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+.visually_hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* Extends the visually_hidden class to allow the element to be focusable
+ * when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+.visually_hidden.focusable:active,
+.visually_hidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.display_inline {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+.display_right {
+	float: right;
+}
+
+.display_left {
+	float: left;
+}
+
+.display_full {
+	width: 100%;
+	height: 100%;
+}
+
+.flex-item-2 {
+	flex-grow: 2;
+}

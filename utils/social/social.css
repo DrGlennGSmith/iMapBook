@@ -1,0 +1,106 @@
+h1 {
+	text-align: center;
+	margin: 0;
+}
+
+section {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.color_test {
+	background-color: plum;
+}
+
+#imb_convo_box {
+	height: 400px;
+	padding: 10px;
+	margin: 2px;
+	margin-bottom: 10px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	background-color: #DDDDDD;
+}
+
+#imb_convo_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.imb_conversation  li {
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 3px;
+	margin-bottom: 10px;
+	min-height: 50px;
+	padding: 0;
+	position: relative;
+	border-radius: 5px;
+}
+
+li.imb_social_msg_left {
+	margin-right: 25%;
+	margin-left: 60px;
+	background-color: rgb(250,200,70);
+}
+
+li.imb_social_msg_right {
+	margin-right: 60px;
+	margin-left: 25%;
+	background-color: #44BBBB;
+}
+
+.imb_conversation img {
+	width: 50px;
+	height: 50px;
+	display: inline;
+}
+
+.imb_social_msg_left img {
+	position: absolute;
+	left: -55px;
+}
+
+.imb_social_msg_right img {
+	position: absolute;
+	left: 100%;
+	transform: translate(5px, 0);
+}
+
+.imb_conversation p {
+	color: black;
+	padding: 5px;
+	margin: 0px;
+}
+
+.imb_social_msg_left label {
+	display: inline;
+	color: black;
+	margin: 0;
+}
+
+.imb_social_msg_right label {
+	display: inline;
+	color: black;
+	margin: 0;
+	text-align: right;
+}
+
+#imb_btn_social_submit {
+	width: 160px;
+	display: inline;
+}
+
+#imb_btn_social_refresh {
+	width: 160px;
+	position: relative;
+	float: right;
+}
+
+

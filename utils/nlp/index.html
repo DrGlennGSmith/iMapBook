@@ -1,0 +1,130 @@
+<html>
+<head><title>NLP Test</title>
+<style>
+textarea { width: 50em; height: 5em; }
+</style>
+</head>
+<body>
+<h3>NLP Test for IMB</h3>
+<p>Type in text below and see how it is processed by the server</p>
+<br><label for="txt_user">User Response</label>
+<br><textarea id="txt_user" placeholder="something the user says with the lexicon"></textarea>
+<br><label for="txt_correct">Correct Answer</label>
+<br><textarea id="txt_correct">There is no spoon</textarea>
+<br><button id="btn_submit">Submit</button><button id="btn_upgrade">Upgrade</button>
+<p></p>
+<br><label for="txt_result">Response from server</label>
+<br><textarea id="txt_result" readonly="true"></textarea>
+</body>
+<script src="../../scripts/jquery-1.7.2.min.js"></script>
+<script>
+$("#btn_submit").click(function(){
+	$("#btn_submit").prop("disabled", true);
+	$.ajax({
+        type: "GET",
+        url: "//imapbook.com:17650/compare",
+        data: {
+			user: $("#txt_user").val(),
+			correct: $("#txt_correct").val()
+        },
+        dataType: "json",
+        async: true,
+        success: function(returnData) {
+		console.log(returnData);
+			if (!returnData) {
+				$("#txt_result").text("MAJOR ERROR");
+			}
+            else if (!returnData.success) {
+                $("#txt_result").val("ERROR: " + returnData.error);
+            } 
+			else {
+				var result = "";
+				// display the comparison
+				if (returnData && returnData.comparison) {
+					var comparison = returnData.comparison;
+					// first, check the verbs
+					var v1 = returnData.userTree.verb;
+					var v2 = returnData.correctTree.verb;
+					if (!comparison.verb.rootSame) {
+						result += "Verbs are different: " + (v1 ? v1.word : '') + " different from " + (v2 ? v2.word : '');
+					}
+					else if (!comparison.verb.negationSame) {
+						result += "Verbs are different: " + (v1 ? ((v1.negated) ? "not " + v1.word : v1.word) : '') + " different from " + 
+							(v2 ? ((v2.negated) ? "not " + v2.word : v2.word) : '');
+					}
+					else if (!comparison.verb.tenseSame) {
+						result += "Verbs have different tense";
+					}
+					else if (!comparison.verb.wordSame) {
+						result += "Verbs are slightly different: " + (v1 ? v1.word : '') + " different from " + (v2 ? v2.word : '');
+					}
+					else {
+						result += "Verbs are the same";
+					}
+					// then, check the subjects
+					result += "\n";
+					var s1 = returnData.userTree.subject;
+					var s2 = returnData.correctTree.subject;
+					if (!comparison.subject.rootSame) {
+						result += "Subjects are different: " + (s1 ? s1.word : '') + " different from " + (s2 ? s2.word : '');
+					}
+					else if (!comparison.subject.wordSame) {
+						result += "Subjects are slightly different: " + (s1 ? s1.word : '') + " different from " + (s2 ? s2.word : '');
+					}
+					else {
+						result += "Subjects are the same";
+					}
+					// then, check the objects
+					result += "\n";
+					var o1 = returnData.userTree.object;
+					var o2 = returnData.correctTree.object;
+					if (!comparison.object.rootSame) {
+						result += "Objects are different: " + (o1 ? o1.word : '') + " different from " + (o2 ? o2.word : '');
+					}
+					else if (!comparison.object.wordSame) {
+						result += "Objects are slightly different: " + (o1 ? o1.word : '') + " different from " + (o2 ? o2.word : '');
+					}
+					else {
+						result += "Objects are the same";
+					}
+				}
+				else {
+					result = "Unknown comparison result";
+				}
+				$("#txt_result").val(result);
+				//success_handler.call(null, jd.value);
+            }
+			$("#btn_submit").prop("disabled", false);
+        },
+        error: function(obj) {
+            $("#txt_result").text("MAJOR ERROR");
+			console.log(obj);
+			$("#btn_submit").prop("disabled", false);
+        }
+    });
+
+});
+
+$("#btn_upgrade").click(function(){
+	$("#btn_upgrade").prop("disabled", true);
+	$.ajax({
+        type: "POST",
+        url: "//imapbook.com:17650/upgrade",
+        data: {
+			user: $("#txt_user").val()
+        },
+        dataType: "json",
+        async: true,
+        success: function(returnData) {
+			$("#txt_result").text(returnData);
+			$("#btn_submit").prop("disabled", false);
+		},
+		error: function(obj) {
+            $("#txt_result").text("MAJOR ERROR");
+			console.log(obj);
+			$("#btn_submit").prop("disabled", false);
+		}
+	});
+});
+</script>
+</html>

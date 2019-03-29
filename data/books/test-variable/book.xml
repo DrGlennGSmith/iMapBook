@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book author="John Rooks" icon="icon.png" title="Easy Maze" version="2.0">
+	<dictionary>
+	</dictionary>
+	<registry>
+		<variable name="gauge" value="0" min="0" max="4" variance="0"></variable>
+        <variable name="game_exit" value="0" min="0" max="1" variance="0"></variable>
+	</registry>
+	<page chapter_number="1" page_number="1" type_id="1">
+		<state>
+			<text><![CDATA[
+<p>Alright, you're in!</p>
+<p>On the next page, you must feed Sparky to enter the maze (Hint: he is a very positive dog).</p>
+<p>Then you'll play a game: Find the parrot (before Sparky does).</p>
+<p>You have twenty seconds. Good luck!</p>
+			]]></text>
+		</state>
+	</page>
+	<page chapter_number="1" page_number="2" type_id="3">
+        <state>
+            <image file_name="doggy.jpg">
+                <hotspot>
+                    <frame file_name="0percent.png" xloc="80" yloc="60" width="10" height="30" word="gauge"></frame>
+                    <frame file_name="33percent.png" xloc="80" yloc="60" width="10" height="30" word="gauge"></frame>
+                    <frame file_name="66percent.png" xloc="80" yloc="60" width="10" height="30" word="gauge"></frame>
+                    <frame file_name="100percent.png" xloc="80" yloc="60" width="10" height="30" word="gauge"></frame>
+                    <frame file_name="100percent.png" xloc="80" yloc="60" width="10" height="30" word="gauge"></frame>
+                </hotspot>
+                <hotspot>
+                    <frame file_name="minus.png" xloc="10" yloc="10" width="10" height="10" word="minus"></frame>
+                </hotspot>
+                <hotspot>
+                    <frame file_name="plus.png" xloc="80" yloc="10" width="10" height="10" word="plus"></frame>
+                </hotspot>
+            </image>
+            <transition type_id="6" trigger="4" variable_idx="0" range="0" next_state_idx="1">
+                <response type_id="3" weight="1" image_object_idx="0" asub="y"><text_input>plus</text_input></response>
+                <response type_id="4" weight="1" image_object_idx="0" asub="y"><text_input>minus</text_input></response>
+                <response type_id="3" weight="0" image_object_idx="0" asub="y"><text_input>gauge</text_input></response>
+            </transition>
+        </state>
+        <state url="data/games/maze/scripts/run.js">
+			<transition type_id="6" trigger="0" variable_idx="1" next_state_idx="2">
+                <response type_id="3" weight="0" asub="y"><text_input>failure</text_input></response>
+            </transition>
+			<transition type_id="6" trigger="1" variable_idx="1" next_state_idx="3">
+                <response type_id="3" weight="1" asub="y"><text_input>success</text_input></response>
+			</transition>
+		</state>
+		<state score="0">
+			<text><![CDATA[
+            You didn't find the parrot in time! Go back and try again!
+			]]></text>
+			<image file_name="doggy.jpg" />
+            <transition type_id="3" trigger="5" next_state_idx="1">
+			</transition>
+		</state>
+        <state score="1">
+            <text><![CDATA[
+            You did it! Click ">" to keep going!
+            ]]>
+            </text>
+            <image file_name="troo.jpg" />
+        </state>
+	</page>
+	<page chapter_number="1" page_number="3" type_id="1">
+		<state>
+			<text><![CDATA[
+<p>Last page...</p>
+			]]></text>
+		</state>
+	</page>
+</book>

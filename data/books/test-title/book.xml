@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book title="Test Book" author="Author &amp; Author" version="2.0">
+    <dictionary>
+        <definition word="science"><![CDATA[from Latin scientia: knowledge]]></definition>
+    </dictionary>
+    <page type_id="1" chapter_number="Introduction" hidden="n" timeout="10">
+        <state sound="" xloc="0" yloc="0" label="">
+            <text><![CDATA[First <span class="defWord">science</span> page... 決定 <br/><img src="data/books/test-title/earth.jpg" width=20% />]]></text>
+            <image file_name="">
+            </image>
+        </state>
+        <state sound="" xloc="0" yloc="0" label="">
+            <text><![CDATA[Page TIMED OUT!]]></text>
+            <image file_name="">
+            </image>
+        </state>
+    </page>
+    <page type_id="2" chapter_number="" hidden="n" timeout="0">
+        <state sound="../../sounds/coin" xloc="9.654761723109655" yloc="28.637097266412546" label="test state label">
+	    <text><![CDATA[So, what do you know about our Solar System? Make sentences by clicking on the words from the lists. Completing this level unlocks Part Two and more about Space... <br/><br/>Good luck!<br/>
+	    <div class="tooltip">Science<span class="tooltiptext">Definition</span></div>
+	    ]]></text>
+            <image file_name="earth.jpg">
+                <hotspot loop="0">
+                    <frame file_name="" opacity="20" xloc="14" yloc="70" width="10" height="10" word="Sun is large"><![CDATA[This is a text for Sun popup frame 0<br> This is the second line <br> This is the third line]]></frame>
+                </hotspot>
+                <hotspot loop='0'>
+                    <frame file_name="arrow-e.jpg" opacity="50" xloc="80" yloc="20" width="10" height="10" word="Moon implodes E"></frame>
+                    <frame file_name="arrow-s.jpg" opacity="50" xloc="80" yloc="20" width="10" height="10" word="Moon implodes S"></frame>
+                    <frame file_name="arrow-w.jpg" opacity="50" xloc="80" yloc="20" width="10" height="10" word="Moon implodes W"></frame>
+                    <frame file_name="arrow-n.jpg" opacity="50" xloc="80" yloc="20" width="10" height="10" word="Moon implodes N"></frame>
+                </hotspot>
+                <draggable clone="y" loop="3">
+                    <frame file_name="ufo-a.gif" opacity="100" xloc="20" yloc="80" width="10" height="10" word="A"></frame>
+                    <frame file_name="ufo-c.gif" opacity="50" xloc="40" yloc="60" width="20" height="20" word="A"></frame>
+                    <frame file_name="ufo-a.gif" opacity="100" xloc="20" yloc="80" width="10" height="10" word="A"></frame>
+                </draggable>
+                <draggable clone="y" loop="0">
+                    <frame file_name="ufo-b.gif" opacity="100" xloc="50" yloc="80" width="20" height="10" word="B"></frame>
+                </draggable>
+                <draggable clone="y" loop="0">
+                    <frame file_name="ufo-c.gif" opacity="100" xloc="80" yloc="80" width="10" height="20" word="C"></frame>
+                    <frame file_name="ufo-a.gif" opacity="100" xloc="80" yloc="80" width="10" height="10" word="A"></frame>
+                    <frame file_name="ufo-b.gif" opacity="100" xloc="80" yloc="80" width="10" height="10" word="B"></frame>
+                </draggable>
+                <container count="4" lock="n" loop="0">
+                    <frame file_name="" opacity="80" xloc="10" yloc="0" width="40" height="10" word="lands on Earth 1"></frame>
+                </container>
+                <container count="4" lock="n" loop="0">
+                    <frame file_name="" opacity="80" xloc="40" yloc="20" width="20" height="20" word="lands on Earth 2"></frame>
+                </container>
+                <container count="1" lock="n" loop="0">
+                    <frame file_name="frame.gif" opacity="100" xloc="60" yloc="0" width="15" height="20" word="lands on Earth 3"></frame>
+                </container>
+            </image>
+            <lexicon label="Test Lexicon" text="Your responses will appear here..." error="I&apos;m not sure if that inference is true. Please, try again.">
+                <word type_id="101" sound="" icon="" word="What is your answer?"></word>
+                <word type_id="2" sound="" icon="" word="Sun"></word>
+                <word type_id="3" sound="" icon="" word="Earth"></word>
+                <word type_id="4" sound="" icon="" word="Moon"></word>
+                <word type_id="5" sound="" icon="" word="is"></word>
+                <word type_id="6" sound="" icon="" word="small"></word>
+                <word type_id="7" sound="" icon="" word="large"></word>
+                <word type_id="7" sound="" icon="" word="science"></word>
+                <word type_id="2" sound="" icon="" word="use"></word>
+                <word type_id="2" sound="" icon="" word="get"></word>
+                <word type_id="1" sound="" icon="" word="hammer"></word>
+            </lexicon>
+            <transition type_id="1" trigger="3" next_state_idx="1" label="test transition label" scenario_id="18233">
+                <response type_id="1" sound="" object="" weight="1" bits="0" asub="n">
+                    <text_input>Some text that never matches</text_input>
+                    <text_output>Some text that never shows</text_output>
+                </response>
+            </transition>
+            <transition type_id="1" trigger="3" next_state_idx="1" label="test transition label" scenario_id="0">
+                <response type_id="1" sound="" object="http://www.imapbook.com/" weight="1" bits="0" asub="n">
+                    <text_input>Sun is small</text_input>
+                    <text_output>You are correct.  Sun appears to be small when viewed from Earth.</text_output>
+                </response>
+                <response type_id="1" sound="" object="" weight="1" bits="0" asub="n">
+                    <text_input>Sun is large</text_input>
+                    <text_output>You are correct. Our star is the largest object in our Solar System.</text_output>
+                </response>
+                <response type_id="1" sound="" object="" weight="1" bits="0" asub="n">
+                    <text_input>Earth is small</text_input>
+                    <text_output>You are correct. Earth is very small on a cosmic scale.</text_output>
+                </response>
+                <response type_id="1" sound="" object="" weight="1" bits="0" asub="n">
+                    <text_input>Earth is large</text_input>
+                    <text_output>You are correct. Earth is large relative to our Moon.</text_output>
+                </response>
+                <response type_id="1" sound="" object="" weight="1" bits="0" asub="y">
+                    <text_input>Moon is small</text_input>
+                    <text_output>You are correct. Moon is small relative to Earth.</text_output>
+                </response>
+                <response type_id="1" sound="" object="" weight="1" bits="0" asub="y">
+                    <text_input>Moon is large</text_input>
+                    <text_output>You are correct. Moon is large when compared to most asteroids.</text_output>
+                </response>
+                <response type_id="2" sound="" object="" weight="0" bits="0" asub="n">
+                    <text_input>Bob is small</text_input>
+                    <text_output>There is not enough evidence for this inference.</text_output>
+                </response>
+                <response type_id="3" sound="" object="hammer" weight="1" bits="0" asub="n">
+                    <text_input>get hammer</text_input>
+                    <text_output>You put it in your inventory.</text_output>
+                </response>
+                <response type_id="4" sound="" object="hammer" weight="1" bits="0" asub="n">
+                    <text_input>use hammer</text_input>
+                    <text_output>You fix your spaceship!</text_output>
+                </response>
+                <response type_id="1" object="" weight="3" asub="y" >
+                    <text_input>Moon implodes S</text_input>
+                    <text_output>Ouch!</text_output>
+                </response>
+            </transition>
+            <transition type_id="5" trigger="7" next_state_idx="1" label="">
+                <response type_id="1" sound="" object="" weight="1" bits="1" asub="y">
+                    <text_input>A lands on Earth 1</text_input>
+                    <text_output>You allow UFO A to land on Earth!</text_output>
+                </response>
+                <response type_id="2" sound="" object="" weight="0" bits="1" asub="y">
+                    <text_input>lands on Earth 1 A</text_input>
+                    <text_output>UFO A leaves Earth!</text_output>
+                </response>
+                <response type_id="1" sound="" object="" weight="1" bits="2" asub="y">
+                    <text_input>B lands on Earth 2</text_input>
+                    <text_output>You allow UFO B to land on Earth!</text_output>
+                </response>
+                <response type_id="1" sound="" object="" weight="1" bits="4" asub="y">
+                    <text_input>C lands on Earth 3</text_input>
+                    <text_output>You allow UFO C to land on Earth!</text_output>
+                </response>
+            </transition>
+        </state>
+        <state sound="" xloc="30.654761904761905" yloc="11.304347826086957" label="Main Game">
+            <text><![CDATA[Nice job!]]></text>
+            <image file_name="">
+            </image>
+            <transition type_id="3" trigger="3" next_state_idx="2" label="">
+            </transition>
+        </state>
+        <state sound="" xloc="45.05952380952381" yloc="28.387096774193548" label="Winner">
+            <text><![CDATA[Congratulations, you won the game! You may now proceed to the next page...]]></text>
+            <image file_name="../../images/winner.gif">
+            </image>
+        </state>
+        <state sound="alien" xloc="34.70238095238095" yloc="32.391304347826086" label="You Lose">
+            <text><![CDATA[You lose, I win! Bwahahaha!]]></text>
+            <image file_name="ufo.gif">
+            </image>
+            <lexicon label="" text=" " error="">
+                <word type_id="1" sound="" icon="" word="Try again"></word>
+            </lexicon>
+            <transition type_id="1" trigger="1" next_state_idx="0" label="">
+                <response type_id="101" sound="" object="" weight="0" bits="0" asub="y">
+                    <text_input>Try again</text_input>
+                    <text_output>Aliens give you another chance...</text_output>
+                </response>
+            </transition>
+        </state>
+    </page>
+	
+    <page chapter_number="" page_number="x" type_id="3" hidden="n">
+        <state sound="../../sounds/coin">
+            <image file_name="earth.jpg">
+                <hotspot>
+                    <frame opacity="20" xloc="14" yloc="70" width="10" height="10" word="Sun is large"><![CDATA[This is a text for Sun popup frame 0<br> This is the second line <br> This is the third line]]></frame>
+                </hotspot>
+                <hotspot loop='1'>
+                    <frame opacity="20" xloc="70" yloc="12" width="20" height="20" word="Moon implodes"></frame>
+                    <frame opacity="50" xloc="75" yloc="17" width="10" height="10" word="Moon deplodes"></frame>
+                </hotspot>
+                <draggable loop='3' clone="y">
+                    <frame file_name="ufo-a.gif" opacity="100" xloc="20" yloc="80" width="10" height="10" word="A"></frame>
+                    <frame file_name="ufo-c.gif" opacity="50" xloc="40" yloc="60" width="20" height="20" word="A"></frame>
+                    <frame file_name="ufo-a.gif" opacity="100" xloc="20" yloc="80" width="10" height="10" word="A"></frame>
+                </draggable>
+                <draggable clone="n">
+                    <frame file_name="ufo-b.gif" xloc="50" yloc="80" width="10" height="10" word="B"></frame>
+                    <frame file_name="ufo-b.gif" xloc="55" yloc="75" width="15" height="15" word="B"></frame>
+                    <frame file_name="ufo-b.gif" xloc="60" yloc="70" width="20" height="20" word="B"></frame>
+                </draggable>
+                <draggable clone="n">
+                    <frame file_name="ufo-c.gif" xloc="80" yloc="80" width="10" height="10" word="C"></frame>
+                </draggable>
+                <container loop='0' count="4" lock="n">
+                    <frame opacity="80" xloc="10" yloc="0" width="40" height="10" word="lands on Earth 1"></frame>
+                    <frame opacity="100" xloc="10" yloc="0" width="60" height="15" word="lands on Earth 1"></frame>
+                </container>
+                <container count="2" lock="y">
+                    <frame opacity="80" xloc="40" yloc="20" width="10" height="20" word="lands on Earth 2"></frame>
+                </container>
+                <container count="1" lock="n">
+                    <frame file_name="frame.gif" xloc="60" yloc="0" width="20" height="20" word="lands on Earth 3"></frame>		
+                </container>
+            </image>
+            <transition type_id="5" trigger="7" next_state_idx="1">
+                <response type_id="1" sound="" object="" weight="2" bits="1" asub="y">
+                    <text_input>A lands on Earth 1</text_input>
+                    <text_output>You allow UFO A to land on Earth!</text_output>
+                </response>
+                <response type_id="1" object="" weight="2" bits="2" asub="y">
+                    <text_input>B lands on Earth 2</text_input>
+                    <text_output>You allow UFO B to land on Earth!</text_output>
+                </response>
+                <response type_id="1" object="" weight="2" bits="4" asub="y">
+                    <text_input>C lands on Earth 3</text_input>
+                    <text_output>You allow UFO C to land on Earth!</text_output>
+                </response>
+            </transition>
+        </state>
+        <state>
+            <image file_name="../../images/winner.gif"></image>
+        </state>
+    </page>
+	
+    <page chapter_number="" type_id="2" hidden="n">
+        <!-- state 0 = north east room -->
+        <state sound="">
+            <text><![CDATA[You are in a room with exit to the West.<br/>Can you find your way out of the maze before you drown?<br/>]]></text>
+            <image file_name="maze.jpg">
+            </image>
+            <lexicon label="" text="Your directions will appear here..." error="Invalid directions. Please, try again.">
+                <word word="move" type_id="1"></word>
+                <word word="West" type_id="2"></word>
+            </lexicon>
+            <transition type_id="1" trigger="1" next_state_idx="1">
+                <response type_id="1" weight="1" asub="y">
+                    <text_input>move West</text_input>
+                    <text_output>You move West!</text_output>
+                </response>
+            </transition>
+            <transition type_id="2" trigger="4" next_state_idx="4">
+            </transition>
+        </state>
+        <!-- state 1 = north west room -->
+        <state sound="">
+            <text><![CDATA[You are in a room with exit to the East and South.<br/>You hear a sound of flowing water.<br/>]]></text>
+            <image file_name="maze.jpg">
+            </image>
+            <lexicon label="" text="Your directions will appear here..." error="Invalid directions. Please, try again or you will drown.">
+                <word word="move" type_id="1"></word>
+                <word word="East" type_id="2"></word>
+                <word word="South" type_id="2"></word>
+            </lexicon>
+            <transition type_id="1" trigger="1" next_state_idx="0">
+                <response type_id="1" weight="1" asub="y">
+                    <text_input>move East</text_input>
+                    <text_output>You move East!</text_output>
+                </response>
+            </transition>
+            <transition type_id="1" trigger="1" next_state_idx="2">
+                <response type_id="1" weight="1" asub="y">
+                    <text_input>move South</text_input>
+                    <text_output>You move South!</text_output>
+                </response>
+            </transition>
+            <transition type_id="2" trigger="4" next_state_idx="4">
+            </transition>
+        </state>
+        <!-- state 2 = south west room -->
+        <state sound="">
+            <text><![CDATA[You are in a room with exit to the North and East.<br/>The sound of flowing water is getting louder!<br/>]]></text>
+            <image file_name="maze.jpg">
+            </image>
+            <lexicon label="" text="Your directions will appear here..." error="Invalid directions. Please, try again, quick!">
+                <word word="move" type_id="1"></word>
+                <word word="East" type_id="2"></word>
+                <word word="North" type_id="2"></word>
+            </lexicon>
+            <transition type_id="1" trigger="1" next_state_idx="3">
+                <response type_id="1" weight="5" asub="y">
+                    <text_input>move East</text_input>
+                    <text_output>You move East!</text_output>
+                </response>
+            </transition>
+            <transition type_id="1" trigger="1" next_state_idx="1">
+                <response type_id="1" weight="1" asub="y">
+                    <text_input>move North</text_input>
+                    <text_output>You move North!</text_output>
+                </response>
+            </transition>
+            <transition type_id="2" trigger="4" next_state_idx="4">
+            </transition>
+        </state>
+        <!-- state 3 = south east room = EXIT -->
+        <state>
+            <text>Congratulations, you conquered the maze! You may now proceed to the next page...</text>
+            <image file_name="../../images/winner.gif"></image>
+        </state>
+        <!-- state 4 = DROWN -->
+        <state>
+            <text>You start drowning...</text>
+            <image file_name="ocean.jpg"></image>
+            <lexicon label="" text=" ">
+                <word word="swim" type_id="1"></word>
+            </lexicon>
+            <transition type_id="1" trigger="1" next_state_idx="0">
+                <response type_id="101" asub="y">
+                    <text_input>swim</text_input>
+                    <text_output>You swim back to the beginning of the maze...</text_output>
+                </response>
+            </transition>
+        </state>
+    </page>
+	
+    <page chapter_number="" type_id="1" hidden="y">
+        <state>
+            <text><![CDATA[Last page...]]></text>
+        </state>
+    </page>
+</book>

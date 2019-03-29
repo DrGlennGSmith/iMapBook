@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<covers>
+    <cover book_id="0" location="introduction" author="Read Me First" title="Welcome!" icon="icon.png" coloring="d" character="1" language="en" voice="-ven-us+f3 -s160 -z -a165 -p45 -l15 -gz" sound="../../sounds/sax" reset="y"><![CDATA[Abstract...]]></cover>
+    <cover book_id="1" location="test-title" author="Author" title="Test One" icon="icon.png" language="en" voice="" sound="" reset="y" replay="y"><![CDATA[<p>Abstract text goes <b>here</b>...</p><p><img src="data/books/test-title/earth.jpg" width=50% /></p>]]></cover>
+    <cover book_id="2" location="test-variable" author="Author" title="Test Two" icon="icon.png" language="en" voice="-ven-us+f3 -s160 -z -a165 -p45 -l15 -gz" reset="y"><![CDATA[Abstract...]]></cover>
+    <cover book_id="4" location="test-survey" author="Author" title="Survey" icon="survey.png" language="en" voice="" sound="" reset="y"><![CDATA[]]></cover>
+ </covers>

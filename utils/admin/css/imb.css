@@ -1,0 +1,211 @@
+@CHARSET "ISO-8859-1";
+#menu {
+	width: 100%;
+	height: 100%;
+}
+#imb_menu_info {
+	padding: 0.5rem;
+	text-align: left;
+}
+#imb_menu_roles {
+	padding: 0.5rem;
+	text-align: right;
+}
+#imb_menu_cohort {
+	text-align: center;
+}
+#imb_menu_cohort label,
+#imb_menu_cohort div {
+	display: inline-block;
+}
+.imb_select {
+	width:90%;
+}
+#imb_reports_results {
+	width: 100%;
+	min-height: 100px;
+	max-height: 600px;
+	margin: auto;
+	overflow: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12pt;
+	font-weight: normal;
+	color: #000000;
+	background-color: #EEEEEE;
+}
+#imb_logo {
+	position: fixed;
+	width: 100%;
+	height: 50%;
+	background-image: url('../../../data/images/logo.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	opacity: 1.0;
+}
+#imb_login {
+	position: fixed;
+	bottom: 0px;
+	left: 25%;
+	width: 50%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 16pt;
+	text-align: center;
+	opacity: 0.9;
+}
+
+.imb_form_label {
+	color: #AAFFAA;
+	font-family: Comic Sans MS;
+	font-weight: normal;
+	width: 90%;
+}
+
+.imb_buttons_right {
+	text-align: right;
+	float: right;
+}
+
+.ui-icon-imb_help_btn {
+	background-image: url("../../../data/icons/questionIcon.png");
+}
+
+/* for registration form validation */
+input.error {
+    background: #FF8855;
+}
+label.error {
+    color: red;
+	float: right;
+	width: 80%;
+	margin: 0;
+	padding-left: 1em;
+	text-align: left;
+}
+
+.chat-window {
+	padding: 5px;
+}
+
+.chat-log {
+	border: 3px inset;
+	height: 450px;
+	overflow-y: auto;
+	resize: vertical;
+	list-style: none;
+	padding: 5px;
+}
+
+.chat-log .chat-message {
+	margin-left: 55px;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 15px;
+	min-height: 50px;
+	padding: 0;
+	position: relative;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.structured-coloring {
+	background-color: rgb(250,200,70);
+}
+.unstructured-coloring {
+	background-color: cadetblue;
+}
+.blocked-coloring {
+	background-color: gray;
+}
+
+.chat-message-unrelated {
+	opacity: 0.2;
+}
+
+.chat-log img {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	left: -55px;
+}
+.chat-monitor-block-user-button {
+	position: absolute;
+	width: 50px;
+	top: 60px;
+	left: -55px;
+	cursor: pointer;
+}
+.chat-monitor-block-message-button {
+	width: calc(100% - 10px);
+	margin: 5px;
+	cursor: pointer;
+}
+
+.chat-name, 
+.chat-source {
+	color: black;
+	font-size: 0.8em;
+	margin: 0px;
+	padding: 5px;
+}
+
+.chat-date {
+	color: black;
+	font-size: 0.8em;
+	padding: 5px;
+}
+@media (min-width: 75em) {
+	.chat-date {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+	}
+}
+
+.chat-message-text {
+	margin: 0px;
+	padding: 5px;
+	font-size: 1.3em;
+	text-shadow: 0 0;
+	overflow: auto;
+}
+.structured-coloring .chat-message-text,
+.unstructured-coloring .chat-message-text {
+	color: darkblue;	
+}
+
+.chat-monitor-input {
+	width: 100% !important;
+}
+
+.chat-monitor-input-text {
+	display: inline !important;
+	width: calc(100% - 12rem) !important;
+	margin-left: 0.5rem !important;
+}
+
+.chat-monitor-input-button {
+	margin-right: 0.5rem;
+}
+
+.ui-btn-force-square {
+	border-radius: 0 !important;
+}
+
+
+.disable-chat {
+	filter: grayscale(100%);
+}
+.display-hidden {
+	display: none !important;
+}
+.float-left {
+	float: left;
+}
+.float-right {
+	float: right;
+}
+.float-clear {
+	clear: both;
+}

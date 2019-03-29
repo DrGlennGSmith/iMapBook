@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book author="Read Me First" icon="icon.png" title="Welcome!" version="2.0">
+	<dictionary>
+		<definition word="amazing"><![CDATA[Causing great surprise or wonder; startlingly impressive]]></definition>
+	</dictionary>
+	<page chapter_number="1" page_number="1" type_id="1">
+		<state>
+			<text><![CDATA[
+</br>
+<p>Welcome to IMapBooks!  This IMapBook provides a guided instruction on how IMapBooks work.</p>
+</br>
+The first page of an IMapBook contains a story.              
+Some words are highlighted on a page.  Click on a highlighted word to see its definition, like this one <span class="defWord">amazing</span>. Click again to hide the definition.
+To move on to the next page, click the ">" button, below, to proceed.
+			]]></text>
+		</state>
+	</page>
+	<page chapter_number="1" page_number="2" type_id="2">
+		<state>
+			<text><![CDATA[
+Welcome! Do you like to read? Click the words below to build your answer. To delete words, click on them.
+When you finish playing the game, you will get to read more of the story.
+Click on the "Books" button, above, to return to the bookshelf, or the "<" button, below, to return to previous page.
+			]]></text>
+			<image file_name="confufish.jpg">
+			</image>
+			<lexicon label="Lexicon" text="Your responses will appear here...">
+				<word word="I" type_id="1"/>
+				<word word="read" type_id="21"/>
+				<word word="like" type_id="21"/>
+				<word word="to" type_id="6"/>
+				<word word="don't" type_id="21"/>
+			</lexicon>
+	
+			<transition type_id="1" trigger="1" next_state_idx="1">
+				<response type_id="1" weight="1">
+					<text_input>I like to read</text_input>
+					<text_output>That's terrific! I think you'll enjoy your time here.</text_output>
+				</response>
+				<response type_id="1" weight="1">
+					<text_input>I read</text_input>
+					<text_output>That's great! The more you practice reading, the better you'll get. I think you'll grow to enjoy it!</text_output>
+				</response>
+				<response type_id="1" weight="1">
+					<text_input>I don't like to read</text_input>
+					<text_output>That's okay. I think you'll still enjoy your time here!</text_output>
+				</response>
+				<response type_id="1" weight="1">
+					<text_input>I don't read</text_input>
+					<text_output>I think you might surprise yourself with how much you do read. It doesn't matter how fast or slow you go, as long as you don't stop!</text_output>
+				</response>
+				<text_error>I'm not sure I understand what you're saying. But I'd like to! Can you try again?</text_error>
+			</transition>
+		</state>
+		<state score="1">
+			<text><![CDATA[
+I'm glad we had this little talk! I hope you enjoy your time here. Click ">" to continue.
+			]]></text>
+			<image file_name="confufish.jpg"/>
+		</state>
+	</page>
+	<page chapter_number="1" page_number="3" type_id="1">
+		<state>
+			<text><![CDATA[
+Last page...
+			]]></text>
+		</state>
+	</page>
+</book>

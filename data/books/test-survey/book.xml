@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book version="2.0">
+	<page chapter_number="Survey Instructions" type_id="2" hidden="y">
+		<state>
+			<text><![CDATA[This is a sample survey... Please, turn to the next page.]]></text>
+			<image file_name="survey.jpg">
+			</image>
+		</state>
+	</page>
+	<page chapter_number="Survey" type_id="2" hidden="y">
+		<state>
+			<text><![CDATA[Please, answer the following question:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="On a scale, how much do you like reading?" text="" error="">
+				<word word="A Lot" type_id="1" sound=""/>
+				<word word="Sometimes" type_id="2" sound=""/>
+				<word word="Rarely" type_id="3" sound=""/>
+				<word word="Never" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="1">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>A Lot</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Sometimes</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Rarely</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Never</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="2">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="1. It is easy to login." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="3">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="4">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="2. It is easy to select a book." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="5">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="6">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="3. It is clear what the books are about." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="7">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="8">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="4. The page is easy to turn." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="9">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="10">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="5. It is easy to go back to the book shelf." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="11">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="12">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="6. I understand the score/credit (top right)." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="13">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="14">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="7. It is clear how far I am in the book." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="15">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="16">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="8. It is clear how to move on after a game." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="17">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="18">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="9. The 'help' function has the right support." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="19">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="20">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, rate the following IMapBook feature:]]></text>
+			<image file_name="survey.jpg">
+			</image>
+			<lexicon label="10. I can easily stop and continue in the book." text="" error="">
+				<word word="Strongly Agree" type_id="1" sound=""/>
+				<word word="Agree" type_id="2" sound=""/>
+				<word word="Disagree" type_id="3" sound=""/>
+				<word word="Strongly Disagree" type_id="4" sound=""/>
+			</lexicon>
+			<transition type_id="1" trigger="1" next_state_idx="21">
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Agree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Disagree</text_input>
+				</response>
+				<response type_id="1" sound="" object="" weight="1" bits="" asub="y">
+					<text_input>Strongly Disagree</text_input>
+				</response>
+			</transition>
+		</state>
+		<state>
+			<text/>
+			<image file_name="survey.jpg">
+			</image>
+			<transition type_id="3" trigger="2" next_state_idx="22">
+			</transition>
+		</state>
+		<state>
+			<text><![CDATA[Please, answer the following question:"]]></text>
+			<image file_name="survey.jpg"/>
+			<lexicon label="Would you like your school to buy it? Why or why not?" text="" error="">
+				<word word="" type_id="101" sound=""/>
+			</lexicon>
+			<transition type_id="2" trigger="1" next_state_idx="23">
+			</transition>
+		</state>
+		<state score="4">
+			<image file_name="survey.jpg"/>
+			<text><![CDATA[Thank you so much… your input is really valuable!
+				<br/>You are helping developing a better product for your peers!
+				<br/><br/>Thank you!
+				<br/>The IMapBook Team.
+			]]></text>
+		</state>
+	</page>
+</book>

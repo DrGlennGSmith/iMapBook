@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Virtual People Factory 2 (VPF2) Test</title>
+        	
+        <script src="scripts/jquery.min.js"></script>
+    	<link rel="stylesheet" href="scripts/jquery.mobile-1.3.0.min.css" />
+    	<script src="scripts/jquery.mobile-1.3.0.min.js"></script>
+        
+        <script type="text/javascript">
+            function get_response(text, scene) {
+                $.ajax({
+                    type: "GET",
+                    url: "service.php",
+                    data: {
+                        imb_text: text,
+                        imb_scene: scene
+                    },
+                    dataType: "json",
+                    async: false,
+                    success: function (jd) { // returns Json Data
+                        if (jd.status === 'error') {
+                            document.getElementById("imb_token").innerHTML = jd.token;
+                            document.getElementById("imb_response").innerHTML = jd.response;
+                            window.alert(jd.return);
+                        } else {
+                            document.getElementById("imb_token").innerHTML = jd.token;
+                            document.getElementById("imb_response").innerHTML = jd.response;
+                            document.getElementById("imb_return").value = jd.return;
+                            
+                            console.log(jd.character + " : " + jd.audio);
+                             
+                            var audio_player = new Audio();
+                            audio_player.src = "http://vpf2.cise.ufl.edu/Uploads/Audio/Speeches/" + scene + "/" + jd.character + "/" + jd.audio;
+                            audio_player.load();
+                            audio_player.play();
+
+                        }
+                    },
+                    error: function () {
+                        window.alert("Unable to query VPF!");
+                    }
+                })
+            };
+        </script>
+    </head>
+    <body>
+        <div data-role="page">
+            <div data-role="content" data-theme="b">
+                <h1>Virtual People Factory 2 (VPF2) Test <a href="http://vpf2.cise.ufl.edu/Classic/Account/ApiAccess">API</a></h1>
+                <div id="browser"></div>
+
+                <script type="text/javascript">
+                    txt = "<p>Browser Name: " + navigator.appName + "</p>";
+                    txt += "<p>Browser Version: " + navigator.appVersion + "</p>";
+                    txt += "<p>Platform: " + navigator.platform + "</p>";
+                    txt += "<p>User-agent header: " + navigator.userAgent + "</p>";
+                    document.getElementById("browser").innerHTML = txt;</script>
+                <form action="">
+                    <table border=0 bgcolor=#AAAAAA cellpadding=10 cellspacing=10>
+                        <tr><td align=right>VPF Token</td><td>
+                                <textarea id="imb_token" rows="40" cols="40"></textarea>
+                            </td></tr>
+                        <tr><td align=right>VPF Response</td><td>
+                                <textarea id="imb_response" rows="40" cols="40"></textarea>
+                            </td></tr>
+                            <tr><td align=right>VPF Return Text</td><td>
+                                <input id="imb_return" name="imb_return" type="text" size="128" />
+                            </td></tr>
+                        <tr><td align=right>Input Text</td><td>
+                                <input id=imb_text name=imb_text type=text size=128 />
+                            </td></tr>
+                        <tr><td align=right>Scenario ID</td><td>
+                                <input id=imb_scene name=imb_scene type=text value="19271" size=16 />
+                            </td></tr>
+                        </select>
+                        </td></tr>
+                        <tr><td colspan=2 align=right>
+                                <input type=button value=Submit onClick='get_response(document.getElementById("imb_text").value, document.getElementById("imb_scene").value);' />
+                            </td></tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

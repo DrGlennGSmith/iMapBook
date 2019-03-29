@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+    <!--	
+    iMapBook eReader
+    iMapBook LLC
+    All Rights Reserved
+    02/18/2016
+    
+    Version 2.7
+    /-->
+    <head>
+        <title>iMapBook</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <!--
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta http-equiv="Pragma" content="no-cache"/>
+        <meta http-equiv="Expires" content="0"/>
+        /-->
+        <link rel="apple-touch-icon" href="data/icons/icon.png" />
+
+        <link rel="stylesheet" href="css/normalize.css"/>
+		<!--<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />-->
+        <link rel="stylesheet" href="css/jquery.mobile.structure.min.css"/>
+        <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+        <link rel="stylesheet" href="css/jquery.mobile.theme.min.css"/>
+        <link rel="stylesheet" href="css/imb-structure.css?ver=2.7.29" />
+        <link rel="stylesheet" href="css/imb-theme.css?ver=2.7.29" />
+    </head> 
+    <body> 
+        <!--  ------------------------------------------------------------------TITLE -->
+        <article id="title_page" data-role="page" data-theme="a" class="no-scroll imb_background_logo">
+        </article><!-- /page -->
+
+        <!--  ------------------------------------------------------------------LOGIN -->
+        <article id="login_page" data-role="page" data-theme="a" class="no-scroll display_remove">
+			<header id="login_heading" class="imb_background_logo"></header>
+			<section class="ui-content">
+				<form data-transition="fade">
+					<fieldset class="ui-field-contain">
+						<label for="login_username" class="i18n" data-i18n="label.username">User Name</label>
+						<input id="login_username" class="login_field" type="text" name="login_username" value="" required />
+					</fieldset>
+					<fieldset class="ui-field-contain">
+						<label for="login_password" class="i18n" data-i18n="label.password">Password</label>
+						<input id="login_password" class="login_field" type="password" name="login_password" value="" required />
+					</fieldset>
+					<div id="login_errors">
+					</div>
+					<button id="btn_login_submit" class="i18n" data-i18n="label.login" data-role="button" data-transition="pop" type="submit">Login</button>
+					<a id="btn_login_register" class="i18n" data-i18n="label.register" data-role="button" data-transition="flip" href="#register_page">Register</a>
+				</form>
+			</section><!-- /content -->
+        </article><!-- /page -->
+
+        <!--  ------------------------------------------------------------------REGISTER -->
+        <article id="register_page" data-role="page" data-theme="a" class="no-scroll display_remove">
+			<header id="register_heading" class="imb_background_logo"></header>
+			<section class="ui-content">
+				<form data-transition="fade">
+					<fieldset class="ui-field-contain">
+						<label for="register_user_name" class="i18n" data-i18n="label.yourname">Your Name</label>
+						<input id="register_user_name" class="login_field" type="text" name="register_user_name" value="" required />
+					</fieldset>
+					<fieldset class="ui-field-contain">
+						<label for="register_login_name" class="i18n" data-i18n="label.login">Login</label>
+						<input id="register_login_name" class="login_field" type="text" name="register_login_name" value="" required />
+					</fieldset>
+					<fieldset class="ui-field-contain">
+						<label for="register_password" class="i18n" data-i18n="label.password">Password</label>
+						<input id="register_password" class="login_field" type="password" name="register_password" value="" required />
+					</fieldset>
+					<fieldset class="ui-field-contain">
+						<label for="register_password2" class="i18n" data-i18n="label.password2">Confirm Password</label>
+						<input id="register_password2" class="login_field" type="password" name="register_password2" value="" required />
+					</fieldset>
+					<fieldset class="ui-field-contain">
+						<label for="register_code">CODE</label>
+						<input id="register_code" class="login_field" type="text" name="register_code" value="" required />
+					</fieldset>
+					<div id="register_errors">
+					</div>
+					<button id="btn_register_submit" data-role="button" data-transition="flip" data-direction="reverse" type="submit">Register</button>
+					<a id="btn_register_cancel" data-role="button" data-transition="flip" href="#login_page">Cancel</a>
+				</form>
+			</section><!-- /content -->
+        </article><!-- /page -->
+
+        <!--  ------------------------------------------------------------------BOOKSHELF -->
+        <article id="bookshelf_page" data-role="page" data-theme="b" class="display_remove">
+            <header id="bookshelf_heading" class="ui-content ui-page-theme-b">
+				<img id="imb_bookshelf_logo" src="data/images/logo.jpg" />
+				<div class="flex-item-2">
+					<h2 id="bookshelf_welcome"></h2>
+					<ul id="bookshelf_achievement_list" data-role="listview" data-inset="true">
+						<li id="bookshelf_achievement_head_padding" data-role="list-divider">
+							<div id="bookshelf_achievement_credits" class="ui-bar-inherit"><span class="i18n achievement_clear" data-i18n="text.totalpoints"></span><span id="bookshelf_credits"></span></div>
+							<span id="bookshelf_achievement_header" class="i18n" data-i18n="label.achievements"></span>
+						</li>
+					</ul>
+				</div>
+            </header><!-- /content -->
+
+            <section id="bookshelf_container" class="ui-content">
+                <div class="ui-grid-b ui-responsive">
+                    <div class="ui-block-a small_bookshelf_background">
+                        <a id="sort_title" data-role="button" data-corners="false" class="sort_button i18n" data-i18n="label.sort-title" href="#">Sort by Title</a>
+                    </div>
+                    <div class="ui-block-b small_bookshelf_background">
+                        <a id="sort_category" data-role="button" data-corners="false" class="sort_button i18n" data-i18n="label.sort-category" href="#">Sort by Category</a>
+                    </div>
+                    <div class="ui-block-c small_bookshelf_background">
+                        <a id="sort_id" data-role="button" data-corners="false" class="sort_button i18n" data-i18n="label.sort-id" href="#">Sort by Book ID</a>
+                    </div>
+                </div>
+				
+				<div id="bookshelf_book_list" data-role="none" data-theme="none">
+				</div><!-- /grid -->
+            </section><!-- /content -->
+			
+            <!-- ---------------------- POPUP AREA ------------------------------------------------------------------------------------------------------------------------------- -->
+            <aside id="summary_popup" data-role="popup" data-corners="false" data-overlay-theme="b" data-theme="b" data-shadow="false" data-tolerance="0,0" data-icon="delete" data-iconpos="notext">
+                <div id="summary_contents" class="ui-grid-a">
+                    <div id="summary_left_page" class="ui-block-a">
+						<h2 class="summary_title center_text"></h2>
+						<p class="summary_author center_text"></p>
+						<hr><p class="i18n center_text" data-i18n="label.abstract">Abstract</p><hr>
+						<div class="summary_abstract"></div>
+						<div class="summary_goto bookmark ui-grid-a">
+							<div class="ui-block-a">
+								<a id="summary_btn_goto_page1" href="#" data-role="button" class="i18n summary_btn" data-i18n="label.read_jump"></a> 
+							</div>
+							<div class="ui-block-b">
+								<input id="summary_input_goto_page1" type="number" min="0">
+							</div>
+						</div>
+                    </div>
+                    <div id="summary_right_page" class="ui-block-b">
+						<p class="i18n center_text summary_preview_heading" data-i18n="label.summary_preview"></p><hr>
+						<div class="summary_page_preview"></div>
+						<div class="bookmark ui-grid-a">
+							<div class="ui-block-a">
+								<a href="#" data-role="button" class="summary_btn summary_btn_reset_book"></a> 
+							</div>
+							<div class="ui-block-b">
+								<a href="#" data-role="button" data-theme="a" class="summary_btn summary_btn_continue_book"></a>
+							</div>
+						</div>
+                    </div>
+                </div>
+				<img id="summary_popup_bg" src="data/images/open_book.png" />
+                <a id="summary_btn_exit" data-rel="back" data-theme="a" data-role="button" data-icon="delete" data-iconpos="notext" href="#" class="ui-btn-right"></a>
+            </aside> <!-- /popup area -->
+		</article><!-- /page -->
+		
+		<!--  -------------------------------------------------------------------SUMMARY -->
+		<article id="summary_page" data-role="page" data-theme="b" class="no-scroll display_remove">
+			<header data-role="header" data-position="fixed" data-tap-toggle="false">
+				<h2 class="summary_title center_text"></h2>
+				<a data-rel="back" data-theme="a" data-role="button" data-icon="back" data-iconpos="notext" href="#" class="ui-btn-right"></a>
+			</header>
+			<section data-role="body" data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a">
+				<p class="summary_author center_text"></p>
+				<hr><p class="i18n center_text" data-i18n="label.summary_abstract"></p><hr>
+				<div class="summary_abstract"></div>
+				<hr><p class="i18n center_text summary_preview_heading" data-i18n="label.summary_preview"></p><hr>
+				<div class="summary_page_preview"></div>
+			</section>
+			<footer data-role="footer" data-position="fixed" data-tap-toggle="false">
+				<div class="ui-grid-a">
+					<div class="ui-block-a">
+						<a href="#" data-role="button" class="summary_btn summary_btn_reset_book"></a> 
+					</div>
+					<div class="ui-block-b">
+						<a href="#" data-role="button" data-theme="a" class="summary_btn summary_btn_continue_book"></a>
+					</div>
+				</div>
+				<div class="ui-grid-a summary_goto">
+					<div class="ui-block-a">
+						<a id="summary_btn_goto_page2" href="#" data-role="button" class="i18n summary_btn" data-i18n="label.read_jump"></a> 
+					</div>
+					<div class="ui-block-b">
+						<input id="summary_input_goto_page2" type="number" min="0">
+					</div>
+				</div>
+			</footer>
+		</article>
+		
+		<!--  -------------------------------------------------------------BOOK -->
+		<article id="imb" data-role="page" data-theme="c" class="no-scroll display_remove" data-title="Welcome!">
+			<header id="imb_header" data-role="header" data-position="fixed" data-tap-toggle="false">
+				<div id="imb_header_options" class="display_left ui-bar-inherit">
+					<button id="imb_btn_profile" data-inline="true" data-rel="popup" class="display_left" title="Edit Profile">
+						<img id="imb_profile_image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+					</button>
+					<a id="imb_btn_social_open" href="#social_page" data-role="button" data-mini="false" data-inline="true" data-icon="comment" data-shadow="false" data-transition="pop" class="display_left ui-nodisc-icon">&nbsp</a>
+					<div class="display_inline display_left">
+						<div id="imb_gold_coins"   class="imb_game_data"><img src="data/images/coins-gold.png" /><span id="imb_gold_count">0</span></div>
+						<div id="imb_silver_coins" class="imb_game_data"><img src="data/images/coins-silver.png" /><span id="imb_silver_count">0</span></div>
+					</div>
+				</div>
+				<h2 id="imb_header_info" class="display_left imb_title"></h2>
+				<div id="imb_header_nav" class="display_right">
+					<button id="imb_btn_bookshelf" data-mini="true" data-inline="true" data-icon="home" data-shadow="true" data-transition="flip" data-iconpos="notext" data-direction="reverse" title="Return to Bookshelf">Bookshelf</button>
+					<button id="imb_btn_settings"  data-mini="true" data-inline="true" data-icon="gear" data-shadow="true" data-transition="flip" data-iconpos="notext" data-direction="reverse" title="Edit Settings">Settings</button>
+				</div>
+			</header>
+			
+			<header id="imb_header_mobile" data-role="header" data-position="fixed" data-tap-toggle="false">
+				<h2 class="imb_title"></h2>
+				<button id="imb_header_mobile_btn_navbar" class="ui-btn-right" data-mini="true" data-icon="bars" data-shadow="true" data-iconpos="notext" title="Toggle Menu">Main Menu</button>
+			</header>
+			
+			<section id="imb_content" class="display_full">
+				<nav id="imb_mobile_nav_bar" data-role="navbar" data-grid="b">
+					<ul>
+						<li><a href="#" id="imb_mobile_nav_home" class="i18n" data-i18n="label.home" data-icon="home">Home</a></li>
+						<!---<li><a href="#" id="imb_mobile_nav_profile" data-icon="user">Profile</a></li>--->
+						<li><a href="#social_page" id="imb_mobile_nav_chat" class="i18n" data-i18n="label.chat" data-icon="comment" data-transition="pop">Chat</a></li>
+						<li><a href="#" id="imb_mobile_nav_settings" class="i18n" data-i18n="label.settings" data-icon="gear">Settings</a></li>
+					</ul>
+				</nav>
+				
+				<div id="imb_page" data-theme="c" data-form="ui-body-c" class="book_recolor ui-body ui-body-c scrollable" onload="window.scrollTo(0,0)">
+				</div>
+				
+				<div id="imb_game" data-theme="c" data-form="ui-body-c" class="book_recolor ui-body ui-body-c">
+					<div id="imb_graphic"></div>
+					<ul id="imb_game_messages_container" class="imb_conversation imb_game_messages_partial"></ul>
+					<div id="imb_game_controls_container" class="imb_game_controls_partial">
+						<div id="imb_game_display_content_bottom" class="ui-grid-a">
+							<div id="imb_game_display_content_bottom_text" class="ui-block-a ui-content"></div>
+							<div id="imb_game_display_content_bottom_buttons" class="ui-block-b ui-content">
+								<div id="imb_btn_mic"></div>
+							</div>
+						</div>
+						<div id="imb_game_words_matrix" data-role="controlgroup" data-type="horizontal"></div>
+					</div>
+				</div>
+
+				<!--</div>-->
+				<aside id="imb_popup" data-theme="a" class="ui-body ui-body-a ui-content">
+					<div id="imb_popup_text"></div>
+					<a href="#" id="imb_popup_ok" data-role="button" class="i18n" data-i18n="label.ok" data-inline="true">Ok</a>
+				</aside>
+				
+				<!--  ------------------------------------------------------------------ SETUP POPUP -->
+				<aside id="setup_popup" data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a">
+				</aside>
+				
+				<!--  ------------------------------------------------------------------ CHOOSE USER AVATAR -->
+				<aside id="imb_profile_dialog" data-role="popup">
+					<ul class="user-avatar-lists" data-role="listview"></ul>
+				</aside>
+
+				<!--  ------------------------------------------------------------------ POPUP MESSAGE -->
+				<aside id="popupMessage" data-role="popup" data-theme="a" data-dismissible="false">
+					<header data-role="header">
+						<h1 class="i18n" data-i18n="text.page-nav-header">Page Navigation</h1>
+					</header>
+					<div role="main" class="ui-content">
+						<h3 class="ui-title i18n" data-i18n="text.page-nav-too-fast">You cannot leave this page that quickly!</h3>
+						<a href="#" class="ui-btn ui-corner-all ui-shadow" class="i18n" data-i18n="label.ok" data-rel="back">Ok</a>
+					</div>
+				</aside>
+				<!--  ------------------------------------------------------------------ POPUP LAST DIALOG -->
+				<aside id="popupDialogLast" data-role="popup" data-theme="a" data-dismissible="false">
+					<header data-role="header">
+						<h1 class="i18n" data-i18n="text.page-nav-header">Page Navigation</h1>
+					</header>
+					<div role="main" class="ui-content">
+						<h3 class="ui-title i18n" data-i18n="text.page-nav-go-back">Are you sure you want to go back?</h3>
+						<p></p>
+						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="label.cancel" data-rel="back">Cancel</a>
+						<a href="#" id="imb_btn_dialog_last" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="label.continue" data-rel="back">Continue</a>
+					</div>
+				</aside>
+				<!--  ------------------------------------------------------------------ POPUP NEXT DIALOG -->
+				<aside id="popupDialogNext" data-role="popup" data-theme="a" data-dismissible="false">
+					<header data-role="header">
+						<h1 class="i18n" data-i18n="text.page-nav-header">Page Navigation</h1>
+					</header>
+					<div role="main" class="ui-content">
+						<h3 class="ui-title i18n" data-i18n="text.page-nav-cannot-return">Have you finished reading everything? Are you sure you want to continue?</h3>
+						<p class="i18n" data-i18n="text.page-nav-cannot-return-more">You may not be able to return to this page.</p>
+						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="label.cancel" data-rel="back">Cancel</a>
+						<a href="#" id="imb_btn_dialog_next" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="label.continue" data-rel="back">Continue</a>
+					</div>
+				</aside>
+				<!--  ------------------------------------------------------------------ POPUP DISCUSSION DIALOG -->
+				<aside id="popupNewTopicReady" data-role="popup" data-theme="a" data-dismissible="false" data-transition="slidedown">
+					<header data-role="header">
+						<h1 class="i18n" data-i18n="text.new-topic-header">New Discussion Topic</h1>
+					</header>
+					<div role="main" class="ui-content">
+						<h3 class="ui-title i18n" data-i18n="text.new-topic">A new question is available to discuss with your friends!</h3>
+						<p class="i18n" data-i18n="text.new-topic-more">Go to the chat screen and check it out</p>
+						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="label.ok" data-rel="back">Ok</a>
+					</div>
+				</aside>
+			</section><!-- /content -->
+            
+			<footer id="imb_footer" data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-alt-icon ui-nodisc-icon">
+				<div class="display_left">
+					<button id="imb_btn_page_last" data-mini="true" data-inline="true" data-shadow="true" data-icon="carat-l" data-iconpos="notext"></button>
+				</div>
+				
+				<div id="imb_footer_content" class="ui-grid-b">
+					<div id="imb_footer_chapter" class="ui-block-a"></div>
+					<div class="ui-block-b">
+						<canvas id="imb_footer_page_progress" width="200" height="10"></canvas>
+						<span id="imb_footer_page_number"></span>
+					</div>
+					<div class="ui-block-c imb_game_data">
+						<div id="imb_footer_page_timeout"></div>
+						<div id="imb_footer_timer"></div>
+						<div id="imb_footer_countdown"></div>
+					</div>
+				</div>
+				
+				<div class="display_right">
+					<button id="imb_btn_page_next" data-mini="true" data-inline="true" data-shadow="true" data-icon="carat-r" data-iconpos="notext"></button>
+				</div>
+			</footer>
+		</article><!-- /page -->
+		
+		<!--  -------------------------------------------------------------------SETUP -->
+		<article id="setup_page" data-role="page" data-theme="a" class="no-scroll display_remove">
+			<section data-role="body" data-theme="a" data-form="ui-body-a" class="ui-body">
+				<fieldset class="ui-field-contain admin-setup">
+					<label for="imb_setup_debug" class="i18n" data-i18n="label.debug">Debug</label>
+					<select id="imb_setup_debug" data-role="slider">
+						<option value="0" class="i18n" data-i18n="label.off">Off</option>
+						<option value="1" class="i18n" data-i18n="label.on" SELECTED>On</option>
+					</select>
+				</fieldset>
+				
+				<fieldset class="ui-field-contain">
+					<label for="imb_setup_sound" class="i18n" data-i18n="label.sound">Sound</label>
+					<select id="imb_setup_sound" data-role="slider">
+						<option value="0" class="i18n" data-i18n="label.off">Off</option>
+						<option value="1" class="i18n" data-i18n="label.on" SELECTED>On</option>
+					</select>
+				</fieldset>
+				
+				<fieldset class="ui-field-contain">
+					<label for="imb_setup_sound_volume" class="i18n" data-i18n="label.soundvolume">Sound Volume</label>
+					<input id="imb_setup_sound_volume" type="range" value="50" min="0" max="100"/>
+				</fieldset>
+				
+				<fieldset class="ui-field-contain">
+					<label for="imb_setup_sound_synthesis" class="i18n" data-i18n="label.ttssynthesis">Character Voices</label>
+					<select id="imb_setup_sound_synthesis" data-role="slider">
+						<option value="off" class="i18n" data-i18n="label.off" SELECTED>Off</option>
+						<option value="on" class="i18n" data-i18n="label.on">On</option>
+					</select>
+				</fieldset>
+				
+				<fieldset class="ui-field-contain admin-setup">
+					<label for="imb_setup_sound_synthesis_attributes" class="i18n" data-i18n="label.ttsattributes">TTS Attributes</label>
+					<input type="text" id="imb_setup_sound_synthesis_attributes" value=""/>
+				</fieldset>
+				
+				<a href="#" id="imb_setup_ok" class="i18n" data-i18n="label.ok" data-role="button" data-inline="true">Ok</a>
+			</section><!-- /content -->
+		</article><!-- /page -->
+		
+		<!--  -----------------------------------------------------------SOCIAL -->
+		<article id="social_page" data-role="page" data-theme="c" class="no-scroll display_remove">
+			<header data-role="header" data-position="fixed" data-tap-toggle="false">
+				<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left ui-btn-force-square">
+					<a id="imb_btn_topic_change" class="ui-btn i18n" data-i18n="label.change-topic" href="#imb_social_topic_list" data-rel="popup" data-mini="false" data-shadow="true">Change Topic</a>
+					<a id="imb_btn_show_topic_answer" class="ui-btn i18n" data-i18n="label.show-answer" href="#popupShowTopicAnswer" data-rel="popup" data-mini="false" data-shadow="true">My Answer</a>
+					<a id="imb_btn_social_change" class="ui-btn i18n" data-i18n="label.change-group" href="#imb_social_select_list" data-rel="popup" data-mini="false" data-shadow="true">Change Group</a>
+					<a id="imb_btn_free_chat" class="ui-btn i18n" data-i18n="label.open-chat" href="#social_page" data-mini="false" data-shadow="true">Open Chat</a>
+					<a id="imb_btn_free_chat_choice" class="ui-btn i18n" data-i18n="label.open-chat" href="#imb_social_open_list" data-rel="popup" data-mini="false" data-shadow="true">Open Chat</a>
+				</div>
+				<h1 id="imb_social_heading">Name of Social Group</h1>
+				<button id="imb_btn_social_close" class="ui-btn-right i18n" data-i18n="label.back" data-mini="false" data-inline="true" data-icon="back" data-shadow="true" data-iconpos="notext">Back</button>
+			</header>
+			
+			<aside id="imb_social_topic_container">
+			</aside>
+			<section id="imb_convo_box" class="ui-content">
+				<ul id="imb_convo_list" class="imb_conversation">
+				</ul>
+			</section>
+			
+			<!--  ------------------------------------------------------------------ POPUP CHANGE CHAT GROUP -->
+			<aside id="imb_social_select_list" data-role="popup">
+				<ul id="imb_social_change_list" data-role="listview">
+				</ul>
+			</aside>
+			<!--  ------------------------------------------------------------------ POPUP CHANGE OPEN CHAT STYLE -->
+			<aside id="imb_social_open_list" data-role="popup">
+				<ul data-role="listview">
+					<li><a id="imb_social_open_change_local" href="#social_page" class="i18n" data-i18n="text.chat-with-club">With Bookclub</a></li>
+					<li><a id="imb_social_open_change_global" href="#social_page" class="i18n" data-i18n="text.chat-with-everyone">With Everyone</a></li>
+				</ul>
+			</aside>
+			<!--  ------------------------------------------------------------------ POPUP CHANGE DISCUSSION TOPIC -->
+			<aside id="imb_social_topic_list" data-role="popup">
+				<ul id="imb_social_topic_change_list" data-role="listview">
+				</ul>
+			</aside>
+			<!--  ------------------------------------------------------------------ POPUP CHOOSE AVATAR IMAGE -->
+			<aside id="imb_social_choose_avatar" data-role="popup">
+				<ul class="user-avatar-lists" data-role="listview"></ul>
+			</aside>
+			<!--  ------------------------------------------------------------------ POPUP SHOW TOPIC ANSWER -->
+			<aside id="popupShowTopicAnswer" data-role="popup" data-theme="a" data-dismissible="false">
+				<header data-role="header">
+					<h1 class="i18n" data-i18n="text.show-answer">My Answer</h1>
+				</header>
+				<div role="main" class="ui-content">
+					<p></p>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="label.back" data-rel="back">Ok</a>
+				</div>
+			</aside>
+			<!--  ------------------------------------------------------------------ POPUP CHANGE TOPIC ANSWER -->
+			<aside id="popupChangeTopicAnswer" data-role="popup" data-theme="a" data-dismissible="false">
+				<header data-role="header">
+					<h1 class="i18n" data-i18n="text.change-answer-header">Change your Answer?</h1>
+				</header>
+				<div role="main" class="ui-content">
+					<p>You previously said: ...</p>
+					<h3 class="ui-title">Do you want to change your answer to ...?</h3>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="text.keep-answer" data-rel="back">Keep my Current Answer</a>
+					<a href="#" id="imb_btn_use_new_topic_answer" class="ui-btn ui-corner-all ui-shadow ui-btn-inline i18n" data-i18n="text.change-answer" data-rel="back">Change Answer</a>
+				</div>
+			</aside>
+			
+			<footer data-role="footer" data-position="fixed" data-tap-toggle="false">
+				<textarea id="imb_social_input_text" data-autogrow="false"></textarea>
+				<div class="imb_social_controls display_right">
+					<button id="imb_btn_social_submit" class="i18n" data-i18n="label.chat-send-message">Send Message</button>
+					<button id="imb_btn_topic_answer_submit" class="i18n" data-i18n="label.chat-send-answer">Submit Answer</button>
+				</div>
+			</footer>
+		</article>
+		
+		<!--  ------------------------------------------------------------------ DEFINITION POPUP -->
+		<aside id="slideDef" class="ui-bar-a ui-corner-all ui-shadow ui-popup-container" style="display:none;"></aside>
+		
+		<!--  ---------------------------------------------------------------------DECISION DIALOG -->
+		<aside id="jqm_popup" data-role="dialog" data-theme="a" data-title="Are you sure?" class="display_remove">
+			<header data-role="header">
+				<h3 class="header">???</h3>
+			</header>
+			<div class="ui-content">
+				<p class="text">???</p>
+				<div class="ui-grid-a">
+					<div class="ui-block-a">
+						<a href="#" class="jqm_popup_yes i18n" data-i18n="label.yes" data-role="button" data-rel="back">Yes</a>
+					</div>
+					<div class="ui-block-b">
+						<a href="#" class="jqm_popup_no i18n" data-i18n="label.no" data-role="button" data-rel="back">No</a>
+					</div>
+				</div>
+			</div>
+		</aside>
+
+		<script src="scripts/jquery.min.js"></script>
+		<script src="scripts/i18next-1.4.1.min.js"></script>
+		<script src="scripts/jquery.mobile-1.4.5.min.js"></script>
+		<script src="scripts/jquery.validate.min.js"></script>
+		<script src="scripts/ajax.js?ver=2.7.30"></script>
+		<script src="scripts/imb_swipe.js?ver=2.7.1"></script>
+		<script src="scripts/imb.js?ver=2.7.30"></script>
+		<script src="scripts/datastructure.js?ver=2.7.30"></script>
+		<script src="utils/common/utility.js?ver=2.7.1"></script>
+		<script src="scripts/listen.js?ver=2.7.1"></script>
+		<script src="scripts/imb_init.js?ver=2.7.30"></script>
+	</body>
+</html>

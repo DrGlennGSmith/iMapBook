@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Social Group Test</title>
+		
+        <script src="../../scripts/jquery.min.js"></script>
+        <link rel="stylesheet" href="../../scripts/jquery.mobile-1.4.5.min.css" />
+        <script src="../../scripts/jquery.mobile-1.4.5.min.js"></script>
+		<link rel="stylesheet" href="social.css">
+    </head>
+    <body>
+        <article id="imb_social_page" data-role="page" data-theme="a" class="color_test">
+			<header data-role="header" data-position="fixed" data-tap-toggle="false">
+				<button id="imb_btn_social_close" data-mini="false" data-icon="back" data-shadow="true" data-iconpos="notext">Back</button>
+				<h1 id="imb_social_heading" data-social-id="0">Name of Social Group</h1>
+				<a id="imb_btn_social_change" href="#imb_social_select_list" data-mini="false" data-icon="gear" data-shadow="true" data-iconpos="notext">Change Conversation</a>
+			</header>
+			<section id="imb_convo_box" data-role="content">
+				<ul id="imb_convo_list" class="imb_conversation">
+				</ul>
+			</section>
+            <footer data-role="footer">
+				<label for="imb_response">Response</label>
+				<textarea id="imb_response" rows="40" cols="40"></textarea>
+				<button id="imb_btn_social_submit" type="button" class="imb_social_button">Send Message</button>
+				
+				<div data-role="collapsible-set">
+					<div data-role="collapsible">
+						<h3>Options</h3>
+						<table border=0 background="#224466" cellpadding=10 cellspacing=10>
+							<tr>
+								<td align=right>Social ID</td><td>
+									<input value="1" id="imb_social_id" name="imb_social_id" type="text" size="4" />
+								</td>
+								<td align=right>User ID</td><td>
+									<input value="1" id="imb_user_id" name="imb_user_id" type="text" size="4" />
+								</td>
+								<td></td><td></td>
+							</tr>
+							<tr>
+								<td align=right>Book ID</td><td>
+									<input value="1" id="imb_book_id" name="imb_book_id" type="text" size="4" />
+								</td>
+								<td align=right>Page ID</td><td>
+									<input value="1" id="imb_page_id" name="imb_page_id" type="text" size="4" />
+								</td>
+								<td align=right>State ID</td><td>
+									<input value="1" id="imb_state_id" name="imb_state_id" type="text" size="4" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+            </footer>
+        </article>
+		
+		<article id="imb_social_select_list" data-role="page" data-theme="a">
+			<section data-role="content">
+				<ul id="imb_social_change_list" data-role="listview">
+				</ul>
+			</section>
+		</article>
+    </body>
+	<script src="ajax.js"></script>
+	<script src="social.js"></script>
+</html>

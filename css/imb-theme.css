@@ -1,0 +1,64 @@
+/*****************************************************************************
+ *  iMapBook eReader
+ *  iMapBook LLC
+ *  All Rights Reserved
+ *  10/05/2016
+ * 
+ *  Version 2.8
+ *
+ * This contains the thematic CSS information (fonts, colours, etc) for the
+ * eReader component of iMapBook. Note that only thematic details NOT included
+ * in the jQueryMobile theme are put in this file; the jQueryMobile theme is
+ * a separate file that should be merged and minified with this one for
+ * release candidates.
+ *****************************************************************************/
+
+/*****************************************************************************
+ * LOGIN / REGISTRATION PAGE - BEGIN
+ *****************************************************************************/
+
+input.input_error {
+    background-color: #FF8855 !important;
+}
+
+label.input_error, span.input_error {
+	color: red;
+}
+
+#login_errors, #register_errors {
+	color: red;
+}
+
+/*****************************************************************************
+ * LOGIN / REGISTRATION PAGE - END
+ *****************************************************************************/
+
+
+/*****************************************************************************
+ * BOOKSHELF PAGE - BEGIN
+ *****************************************************************************/
+ 
+.achievement_clear {
+	color: #B2DFF8;
+}
+ 
+#bookshelf_credits {
+	font-weight	: bold;
+	font-size	: 1.1em;
+}
+
+.bookshelf_book_title {
+	color		: white;
+	font-size	: 1.0em;
+	font-weight	: bold;
+	text-shadow : none;
+}
+
+#summary_left_page {
+	color : black;
+}
+
+ /*****************************************************************************
+ * BOOKSHELF PAGE - END
+ *****************************************************************************/
+ 

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+    <!--	
+    iMapBook Administrative Tool
+    iMapBook LLC
+    All Rights Reserved
+    04/08/2014
+    
+    Version 2.5
+    /-->
+    <head>
+        <title>iMapBook-Admin</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-icon" href="data/icons/icon.png" />
+
+		<link rel="stylesheet" href="scripts/jquery-ui.min.css" />
+		<link rel="stylesheet" href="scripts/jquery.mobile-1.3.0.min.css" />
+		<link rel="stylesheet" href="css/jtable/jtable.min.css" />
+		<link rel="stylesheet" href="utils/admin/css/imb.css?ver=2.7.28" />
+    </head>
+    <body> 
+        <!--  ------------------------------------------------------------------LOGIN -->
+        <article data-role="page" data-theme="d" id="login">
+            <div data-role="content">
+                <header data-role="none" id="imb_logo"></header>
+                <section data-role="content" data-theme="a" id="imb_login">
+                    <form data-transition="fade">
+                        <fieldset data-role="fieldcontain">
+                            <label for="imb_user">Login</label>
+                            <input type="text" name="imb_user" id="imb_user" value="" required />
+                        </fieldset>
+                        <fieldset data-role="fieldcontain">
+                            <label for="imb_pass">Password</label>
+                            <input type="password" name="imb_pass" id="imb_pass" value="" required />
+                        </fieldset>
+                        <button data-role="button" data-transition="pop" id="imb_login_btn_submit">Submit</button>
+                    </form>
+                </section>
+            </div><!-- /content -->
+        </article><!-- /page -->
+
+        <!--  ------------------------------------------------------------------ MENU -->
+        <div class="display-hidden" data-role="page" id="menu" data-theme="a">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a" class="ui-grid-a">
+                <div class="ui-block-a" id="imb_menu_info"></div>
+				<div class="ui-block-b" id="imb_menu_roles"></div>
+            </div>
+
+            <div data-role="popup" data-theme="e" id="popupCohort">
+                <p><b>Cohort</b> is a collection of users who belong to the same library.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupUserType">
+                <p><b>Auditor</b> can view reports from the <i>Admin Module</i> for specific users only.</p>
+                <p><b>Administrator</b> has complete access to <i>Admin Module</i> and the <i>Authoring Tool</i>.</p>
+                <p><b>Writer</b> has access to the <i>Authoring Tool</i> and the <i>Admin Module</i> for their own cohort only.</p>
+                <p>Every user should have at least <b>Reader</b> access.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupBookshelf">
+                <p><b>Virtual Bookshelf</b> is a numeric value pointing to a bookshelf in virtual collections which can contains any number of <b>books</b>.</p>
+                <p>Disabled when set to <b>0</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupBookclub">
+                <p><b>Book Club</b> is a numeric value which points to a book club (if any) this reader currently belongs to.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupCohortName">
+                <p>A descriptive name used to identify the purpose of this <b>Cohort</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupCode">
+                <p><b>Code</b> used by users to register with a specific <b>Cohort</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupLibrary">
+                <p><b>Library File</b> is an XML bookshelf file which lists all books available to this <b>Cohort</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupRoom">
+                <p><b>Room</b> points to a construct in virtual collections which contains any number of <b>Bookcases</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupBookcase">
+                <p><b>Bookcase</b> points to a construct in virtual collections which contains any number of <b>Bookshelves</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupBookshelves">
+                <p><b>Max Bookshelves</b> indicates how many <b>Bookshelves</b> are in virtual collections.</p>
+                <p>Virtual collections for the <b>Cohort</b> are disabled when set to <b>0</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupBookclubs">
+                <p><b>Max Book Clubs</b> indicates how many <b>Book Clubs</b> are available for auto assignment in this <b>Cohort</b>.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupRandomizeBookclubs">
+                <p>This assigns a new bookclub to all readers randomly. The readers are equally distributed among the available bookclubs.</p>
+				<p>Use this if you already have many users in a cohort and don't want to manually assign them to bookclubs.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupGroup">
+                <p><b>Period</b> is an arbitrary grouping of cohort members under specified label.</p>
+            </div>
+            <div data-role="popup" data-theme="e" id="popupChatoptions">
+                <p>Controls how the students can chat. If all options are off, no chat is possible.</p>
+				<p><b>Open chat within bookclubs</b> - students can talk about any topic but only with other students in the same bookclub.</p>
+				<p><b>Open chat within whole cohort</b> - students can talk about any topic with all of the students in their cohort.</p>
+				<p><b>Topic-based chat</b> - students can chat with others in their bookclub about specific discussion questions and give answers to the questions.</p>
+            </div>
+
+            <div data-role="content">
+                <div data-role="collapsible-set" data-theme="b" id="imb_list_header">
+                    <!-- REPORTS -->
+                    <div data-role="collapsible" data-theme="b" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="imb_reports_container"><h3>Reports</h3>
+                        <form>
+                            <fieldset class="ui-grid-c">
+                                <div class="ui-block-a">
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select">
+                                        <label for="imb_reports_id">Report</label>
+                                        <select data-native-menu="false" data-theme="d" id="imb_reports_id" name="imb_reports_id">
+                                            <option value="">Select report...</option>
+                                            <option value="1" class="report-admin-only">Registration Activity</option>
+                                            <option value="2">Reader Activity</option>
+                                            <option value="7">Reader Responses</option>
+                                            <option value="3">Invalid Responses</option>
+                                            <option value="4">Response Totals</option>
+                                            <option value="5" class="report-remove">Time Report</option>
+                                            <option value="6">Time Summary Report</option>
+                                            <option value="8">Quiz Reports</option>
+											<option value="9" class="report-discussions">Freeform Discussions</option>
+											<option value="10" class="report-discussions">Topic Discussions</option>
+											<option value="11" class="report-discussions">Topic Discussion Answers</option>
+											<option value="12" class="report-discussions">Archived Discussions</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ui-block-b">
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select" >
+                                        <label for="imb_reports_cohort_id">Cohort</label>
+                                        <select  data-native-menu="false" data-theme="d" id="imb_reports_cohort_id" name="imb_reports_cohort_id"></select>
+                                    </div>
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select" >
+                                        <label for="imb_reports_period_id">Period</label>
+										<input type="text" name="imb_reports_period_id" id="imb_reports_period_id" placeholder="Period" value="" />
+                                    </div>
+                                </div>
+                                <div class="ui-block-c">
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select" >
+                                        <label for="imb_reports_user_id">User</label>
+                                        <select  data-native-menu="false" data-theme="d" id="imb_reports_user_id" name="imb_reports_user_id">
+                                            <option value="all">All readers</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ui-block-d">
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select">
+                                        <a href="#" data-role="button" data-theme="e" id="imb_reports_btn_submit">Submit</a>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!--data-role="collapsible"  data-collapsed="true" -->
+                            <div data-mini="true" data-theme="a" ><h3>Advanced</h3>
+                                <fieldset class="ui-grid-c">
+                                    <div class="ui-block-a">
+                                        <div data-role="fieldcontain" class="ui-hide-label imb_select">
+                                            <label for="imb_reports_bookclub_id">Bookclub</label>
+                                            <select data-mini="true" data-native-menu="false" data-theme="d" id="imb_reports_bookclub_id" name="imb_reports_bookclub_id"></select>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-b">
+                                        <div data-role="fieldcontain" class="ui-hide-label imb_select">
+                                            <label for="imb_reports_book_id">Book</label>
+                                            <select data-mini="true" data-native-menu="false" data-theme="d" id="imb_reports_book_id" name="imb_reports_book_id"></select>
+                                        </div>
+                                        <div data-role="fieldcontain" class="ui-hide-label report-discussion-options imb_select">
+                                            <label for="imb_reports_topic_id">Discussion Topic</label>
+                                            <select data-mini="true" data-native-menu="false" data-theme="d" id="imb_reports_topic_id" name="imb_reports_topic_id"><option value="none">None</option></select>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-c">
+                                        <div data-role="fieldcontain" class="ui-hide-label imb_select">
+                                            <label for="imb_reports_page_id">Page(s)</label>
+                                            <input type="text" name="imb_reports_page_id" id="imb_reports_page_id" placeholder="Page Number" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-d">
+                                        <div data-role="fieldcontain" class="ui-hide-label imb_select">
+                                            <label for="imb_reports_start_dt">Start</label>
+                                            <input type="text" name="imb_reports_start_dt" id="imb_reports_start_dt" placeholder="Start (YYYY/MM/DD)" value="" />
+                                        </div>
+                                        <div data-role="fieldcontain" class="ui-hide-label imb_select">
+                                            <label for="imb_reports_end_dt">End</label>
+                                            <input type="text" name="imb_reports_end_dt" id="imb_reports_end_dt" placeholder="End (YYYY/MM/DD)" value="" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </form>
+                        <div id="imb_reports_results"></div>
+                    </div> <!-- /report -->
+
+                    <!-- USERS variables begin with imb_um_xx  -->
+                    <div data-role="collapsible" data-theme="b" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="imb_users_container"><h3>Users</h3>
+                        <form>
+                            <div class="imb_form_label">
+                                <label for="imb_users_cohort_id">Cohort
+                                    <a href="#popupCohort" data-position-to="origin" data-role="button" data-rel="popup" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                </label>
+                                <select data-inline="true" data-native-menu="false" data-theme="c" id="imb_users_cohort_id" name="imb_users_cohort_id"></select>
+                            </div>
+                            <!-- New user form -->
+                            <div data-role="collapsible" data-mini="true" data-theme="a" data-collapsed="true"  id="imb_newuser_collapsible"><h3>New User</h3>
+                                <!-- User name/Login/Password -->
+                                <div class="ui-grid-c">
+                                    <div class="ui-block-a">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_username">User Name</label>
+                                            <input data-mini="true" id="imb_newuser_username" name="imb_newuser_username" type="text" value="" />
+                                        </div>
+                                    </div> 
+                                     <div class="ui-block-b">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_avatar">User Avatar</label>
+                                            <input data-mini="true" id="imb_newuser_avatar" name="imb_newuser_avatar" type="text" value="" />
+                                        </div>
+                                    </div>  
+                                    <div class="ui-block-c">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_login">Login</label>
+                                            <input data-mini="true" id="imb_newuser_login" name="imb_newuser_login" type="text" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-d">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_password">Password</label>
+                                            <input data-mini="true" id="imb_newuser_password" name="imb_newuser_password" type="password" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- User Type/Bookshelf/Bookclub -->
+                                <div class="ui-grid-c">
+                                    <div class="ui-block-a" >
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_usertype">User Type
+                                                <a href="#popupUserType" data-position-to="origin" data-role="button" data-rel="popup" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <fieldset data-mini="true" data-role="controlgroup" data-type="horizontal" id="imb_newuser_usertype"></fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-b">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_bookshelf">Virtual Bookshelf
+                                                <a href="#popupBookshelf" data-position-to="origin" data-role="button" data-rel="popup" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newuser_bookshelf" name="imb_newuser_bookshelf" type="text" value="0" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-c">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_bookclub">Book Club
+                                                <a href="#popupBookclub" data-position-to="origin" data-role="button" data-rel="popup" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <select data-mini="true" id="imb_newuser_bookclub" name="imb_newuser_bookclub"></select>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-d">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newuser_group">Period
+                                                <a href="#popupGroup" data-position-to="origin" data-role="button" data-rel="popup" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newuser_group" name="imb_newuser_group" type="text" value="0" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add User Button -->
+                                <div class="ui-grid-solo">
+                                    <div class="ui-block-a imb_buttons_right">
+                                        <a href="#" data-mini="true" data-role="button" data-inline="true" data-theme="e" id="imb_newuser_add_btn">Add User</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-role="collapsible-set" id="imb_users_collapsible_list"></div>
+                        </form>
+
+                    </div> <!-- /cohorts -->
+
+                    <!-- COHORTS -->
+                    <div data-role="collapsible" data-theme="b" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="imb_cohorts_container"><h3>Cohorts</h3>
+                        <form>
+                            <!-- New cohort form -->
+                            <div data-role="collapsible" data-mini="true" data-theme="a" data-collapsed="true" id="imb_new_cohort_container"><h3>New Cohort</h3>
+                                <!-- Cohort Name/Code/Library -->
+                                <div class="ui-grid-b">
+                                    <div class="ui-block-a">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newcohort_name">Cohort Name
+                                                <a href="#popupCohortName" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newcohort_name" name="imb_newcohort_name" type="text" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-b">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newcohort_code">Code
+                                                <a href="#popupCode" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newcohort_code" name="imb_newcohort_code" type="text" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-c">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newcohort_library">Library File
+                                                <a href="#popupLibrary" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newcohort_library" name="imb_newcohort_library" type="text" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Room/Bookcase/Bookshelves -->
+                                <div class="ui-grid-b">
+                                    <div class="ui-block-a">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newcohort_room">Room
+                                                <a href="#popupRoom" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newcohort_room" name="imb_newcohort_room" type="text" value="0" />
+                                        </div>
+                                    </div>  
+                                    <div class="ui-block-b">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newcohort_bookcase">Bookcase
+                                                <a href="#popupBookcase" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newcohort_bookcase" name="imb_newcohort_bookcase" type="text" value="0" />
+                                        </div>
+                                    </div>  
+                                    <div class="ui-block-c">
+                                        <div class="imb_form_label">
+                                            <label for="imb_newcohort_bookshelves">Max Bookshelves
+                                                <a href="#popupBookshelves" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                            </label>
+                                            <input data-mini="true" id="imb_newcohort_bookshelves" name="imb_newcohort_bookshelves" type="text" value="0" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add Cohort Button -->
+                                <div class="ui-grid-a">
+                                    <div class="ui-block-a">
+                                        &nbsp;
+                                    </div>
+                                    <div class="ui-block-b"> 
+                                        <div data-role="fieldcontain" class="ui-hide-label imb_buttons_right">
+                                            <a href="#" data-mini="true" data-role="button" data-theme="e" id="imb_newcohort_add_btn">Add Cohort</a>
+                                        </div>
+                                    </div>
+                                </div>	
+                            </div><!-- /new cohort form -->
+                            <div data-role="collapsible-set" id="imb_cohorts_collapsible_list"></div>
+                        </form>
+                        <!-- Virtual Collections -->
+                        <div data-role="collapsible" data-mini="true" data-theme="b" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="imb_collections_container"><h3>Virtual Collections</h3>
+                        </div> <!-- / virtual collections -->
+                    </div> <!-- /cohorts -->
+
+                    <!-- SOCIAL GROUPS -->
+                    <div data-role="collapsible" data-theme="b" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="imb_social_container"><h3>Chat Settings</h3>
+						<div class="ui-grid-b">
+							<div class="ui-block-a">
+								<div class="imb_form_label">
+									<label for="imb_social_bookclubs">Number of Bookclubs
+									<a href="#popupBookclubs" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+									</label>
+									<input data-mini="true" id="imb_social_bookclubs" name="imb_social_bookclubs" type="range" min="0" max="50" />
+								</div>
+								<div data-role="fieldcontain" class="ui-hide-label">
+									<a href="#" data-mini="true" data-role="button" data-inline="true" data-theme="c" id="imb_social_randomize_clubs_btn">Randomize Users' Bookclub</a>
+									<a href="#popupRandomizeBookclubs" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+								</div>
+							</div>
+							<div class="ui-block-b">
+								<div class="imb_form_label">
+									<label for="imb_social_cohort_id">Cohort
+										<a href="#popupCohort" data-position-to="origin" data-role="button" data-rel="popup" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+									</label>
+									<select data-inline="true" data-native-menu="false" data-theme="c" id="imb_social_cohort_id" name="imb_social_cohort_id"></select>
+								</div>
+							</div>
+							<div class="ui-block-c">
+								<div data-role="fieldcontain" class="imb_form_label">
+									<label>How users can chat
+									<a href="#popupChatoptions" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+									</label>
+									<fieldset data-role="controlgroup">
+										<label for="imb_chatsetting_bookclubs">Open chat within bookclubs</label>
+										<input data-mini="true" id="imb_chatsetting_bookclubs" name="imb_chatsetting_bookclubs" type="checkbox" class="ui-checkbox-off">
+										<label for="imb_chatsetting_cohort">Open chat within whole cohort</label>
+										<input data-mini="true" id="imb_chatsetting_cohort" name="imb_chatsetting_cohort" type="checkbox" class="ui-checkbox-off">
+										<label for="imb_chatsetting_qlatest">Topic-based chat</label>
+										<input data-mini="true" id="imb_chatsetting_qlatest" name="imb_chatsetting_qlatest" type="checkbox" class="ui-checkbox-off">
+									</fieldset>
+								</div>
+								<div data-role="fieldcontain" class="ui-hide-label imb_buttons_right">
+									<a href="#" data-mini="true" data-role="button" data-inline="true" data-theme="e" id="imb_social_settings_update_btn">Update Settings</a>
+								</div>
+							</div>
+						</div>
+                        <form>
+                            <div data-role="collapsible-set" id="imb_social_collapsible_list"></div>
+                        </form>
+                    </div> <!-- /social groups -->
+					
+					
+					<!-- CHAT MONITORING -->
+                    <div id="imb_chat_container" data-role="collapsible" data-theme="b" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><h3>Monitor Chat</h3>
+						<fieldset class="ui-grid-c">
+							<div class="ui-block-a">
+								<div data-role="fieldcontain" class="ui-hide-label imb_select">
+									<label for="imb_chat_cohort_id">Cohort</label>
+									<select data-inline="true" data-native-menu="false" data-theme="c" id="imb_chat_cohort_id" name="imb_chat_cohort_id"></select>
+								</div>
+								<div data-role="fieldcontain" class="ui-hide-label imb_select" >
+									<label for="imb_chat_period_id">Period</label>
+									<input type="text" name="imb_chat_period_id" id="imb_chat_period_id" placeholder="Period" value="" />
+								</div>
+							</div>
+							<div class="ui-block-b">
+								<div data-role="fieldcontain" class="ui-hide-label imb_select">
+									<label for="imb_chat_book_id">Book</label>
+									<select data-mini="true" data-native-menu="false" data-theme="d" id="imb_chat_book_id" name="imb_chat_book_id"></select>
+								</div>
+								<div data-role="fieldcontain" class="ui-hide-label imb_select">
+									<label for="imb_chat_topic_id">Discussion Topic</label>
+									<select data-mini="true" data-native-menu="false" data-theme="d" id="imb_chat_topic_id" name="imb_chat_topic_id"></select>
+								</div>
+							</div>
+							<div class="ui-block-c">
+								<div data-role="fieldcontain" class="ui-hide-label display-hidden">
+									<label for="imb_chat_start_dt">Start Date</label>
+									<input type="text" name="imb_chat_start_dt" id="imb_chat_start_dt" placeholder="Start (YYYY/MM/DD)" value="" />
+								</div>
+							</div>
+						</fieldset>
+						
+						<div id="imb_chat_logs">
+						</div>
+                    </div> <!-- /chat monitoring -->
+
+					
+                    <!-- LIBRARY -->
+                    <div data-role="collapsible" data-theme="b" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="imb_library_container"><h3>Library</h3>
+                        <div class="ui-grid-b">
+                            <div class="ui-block-a">
+                                <div class="imb_form_label">
+                                    <label style="display:inline" for="imb_lm_sourceList">Source Environment:</label>
+                                    <a href="#popupSrcEnv" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                    <!-- Help dialog for source environment -->
+                                    <div data-role="popup" data-theme="e" id="popupSrcEnv">
+                                        <p>The environment you would like to copy/merge/delete the book from</p>
+                                    </div>
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select" id="imb_lm_source" >
+                                        <select data-native-menu="false" data-theme="d" id="imb_lm_sourceList" name="imb_lm_sourceList">
+                                            <option value="">Select source environment...</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-block-b" style="width:300px;">
+                                <div data-role="fieldcontain" style="width:200px;" class="ui-hide-label imb_buttons_center"><br />
+                                    <a href="#" data-role="button" data-theme="e" id="imb_lm_copy_btn_submit"> =&gt; Copy Book =&gt;</a>
+                                </div>
+                            </div>
+                            <div class="ui-block-c">
+                                <div class="imb_form_label">
+                                    <label style="display:inline" for="imb_lm_destList">Destination Environment:</label>
+                                    <a href="#popupDestEnv" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                    <!-- Help dialog for source environment -->
+                                    <div data-role="popup" data-theme="e" id="popupDestEnv">
+                                        <p>The environment you would like to copy/merge/delete the book to</p>
+                                    </div>
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select" id="imb_lm_dest" >
+                                        <select data-native-menu="false" data-theme="d" id="imb_lm_destList" name="imb_lm_sdestList">
+                                            <option value="">Select destination environment...</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-grid-b">
+                            <div class="ui-block-a">
+                                <div class="imb_form_label">
+                                    <label style="display:inline" for="imb_lm_sourceList">Available Books:</label>
+                                    <a href="#popupBooks" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                    <!-- Help dialog for book list -->
+                                    <div data-role="popup" data-theme="e" id="popupBooks">
+                                        <p>The books in the selected source environment</p>
+                                    </div>
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select" id="imb_lm_booksSrc" >
+                                        <select data-native-menu="false" data-theme="d" id="imb_lm_bookSrcList">
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-block-b" style="width:300px;" >
+                                <div data-role="fieldcontain"  style="width:200px;"  class="ui-hide-label imb_buttons_center"><br />
+                                    <a href="#" data-role="button" data-theme="e" id="imb_lm_merge_btn_submit">=&gt; Merge Books &lt;=</a>
+                                </div>
+                            </div>
+                            <div class="ui-block-c">
+                                <div class="imb_form_label">
+                                    <label style="display:inline" for="imb_lm_destList">Available Books:</label>
+                                    <a href="#popupDestBooks" data-position-to="origin" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-iconshadow="true" data-shadows="true" data-corners="true" data-icon="imb_help_btn" data-theme="b" data-iconpos="notext">Help</a>
+                                    <!-- Help dialog for book list -->
+                                    <div data-role="popup" data-theme="e" id="popupDestBooks">
+                                        <p>The books in the selected destination environment</p>
+                                    </div>
+                                    <div data-role="fieldcontain" class="ui-hide-label imb_select" id="imb_lm_booksDest" >
+                                        <select data-native-menu="false" data-theme="d" id="imb_lm_bookDestList"></select> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-grid-b">
+                            <div class="ui-block-a">
+                                <div data-role="fieldcontain" style="width:200px;" class="ui-hide-label imb_buttons_center">
+                                    <a href="#" data-role="button" data-theme="e" id="imb_lm_destUpdate_btn_submit">Update Book</a>
+                                </div>
+                            </div>
+                            <div class="ui-block-b"  style="width:300px;">
+                                &nbsp;
+                            </div>
+                            <div class="ui-block-c">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="ui-grid-b">
+                            <div class="ui-block-a">
+                                <div data-role="fieldcontain" style="width:200px;" class="ui-hide-label imb_buttons_center">
+                                    <a href="#" data-role="button" data-theme="e" id="imb_lm_srcDelete_btn_submit">Delete Book</a>
+                                </div>
+                            </div>
+                            <div class="ui-block-b"  style="width:300px;">
+                                &nbsp;
+                            </div>
+                            <div class="ui-block-c">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div><!-- library -->
+                </div><!-- header -->
+            </div><!-- content -->
+        </div><!-- page -->
+        <div class="display-hidden" data-role="dialog" id="jqm_popup" data-theme="a" data-title="Are you sure?">
+            <div data-role="header">
+                <h3 class="header">???</h3>
+            </div>
+            <div data-role="content">
+                <p class="text">???</p>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a href="#" class="jqm_popup_yes" data-role="button" data-rel="back">Yes</a>
+                    </div>
+                    <div class="ui-block-b">
+                        <a href="#" class="jqm_popup_no" data-role="button" data-rel="back">No</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- dialog -->
+		
+		<script src="scripts/jquery.min.js"></script>
+		<script src="scripts/jquery-ui.min.js?ver=1.12.1"></script>
+		<script src="scripts/jquery.mobile-1.3.0.min.js"></script>
+		<script src="scripts/jquery.validate.min.js"></script>
+		<script src="scripts/jquery.jtable.min.js?ver=2.4.0"></script>
+		<script src="utils/admin/scripts/datastructure.js?ver=2.7.29"></script>
+		<script src="utils/admin/scripts/ajax.js?ver=2.7.29"></script>
+		<script src="utils/admin/scripts/imb.js?ver=2.7.29"></script>
+		<script src="utils/common/utility.js?ver=2.7.1"></script>
+		<script src="utils/admin/scripts/imb_init.js?ver=2.7.29"></script>
+    </body>
+</html>

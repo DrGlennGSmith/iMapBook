@@ -1,0 +1,5 @@
+<character_list>
+	<character id="1" name="Confufish" voice="">
+		<avatar type="1" name="Default" default="true">confufish/1.png</avatar>
+	</character>
+</character_list>
