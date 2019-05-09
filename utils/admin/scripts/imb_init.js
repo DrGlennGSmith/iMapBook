@@ -351,9 +351,9 @@ $(document).ready(function () { // document loaded and DOM is ready
 	$(document).on("click", "#imb_newcohort_add_btn", function (e, ui) {
 		var form = $(this).closest("form"); // parent form
 		// DATABASE insert
-		var cohort_id = imb_cohort_create($("#imb_newcohort_name").val(), $("#imb_newcohort_code").val(), $("#imb_newcohort_library").val(), $("#imb_newcohort_room").val(), $("#imb_newcohort_bookcase").val(), $("#imb_newcohort_bookshelves").val());
+		var cohort_id = imb_cohort_create($("#imb_newcohort_name").val(), $("#imb_newcohort_code").val(), $("#imb_newcohort_library").val(), $("#imb_newcohort_room").val(), $("#imb_newcohort_bookcase").val(), $("#imb_newcohort_bookshelves").val(), "3", "4");
 		if (cohort_id > 0) {
-			var cohortObject = new Cohort(cohort_id, $("#imb_newcohort_name").val(), $("#imb_newcohort_code").val(), $("#imb_newcohort_library").val(), $("#imb_newcohort_room").val(), $("#imb_newcohort_bookcase").val(), $("#imb_newcohort_bookshelves").val()); // create new record
+			var cohortObject = new Cohort(cohort_id, $("#imb_newcohort_name").val(), $("#imb_newcohort_code").val(), $("#imb_newcohort_library").val(), $("#imb_newcohort_room").val(), $("#imb_newcohort_bookcase").val(), $("#imb_newcohort_bookshelves").val(), 3, 4); // create new record
 			cohort_list.unshift(cohortObject); // prepend it to the array
 			refresh_cohorts_list(); // refresh the display
 			form[0].reset();
