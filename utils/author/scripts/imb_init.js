@@ -58,7 +58,7 @@ $(document).ready(function() { // document loaded and DOM is ready
 
 			//This had to be moved.
 			function addBook() {
-				var book = new Book(new_book_id, new_dir, $('#nauthor', form).val(), $('#ntitle', form).val(), "", "en", "c", 0, "", "", "y");
+				var book = new Book(new_book_id, new_dir, $('#nauthor', form).val(), $('#ntitle', form).val(), "", "en", "c", 0, "", "y", "");
 				book.modified = "new"; // used in merge logic in services.php ( "new" flags to verify book_id in services.php )
 				book_list.unshift(book); // prepend the book record to internal data struct array
 				insert_cover(0, 0); // prepend this book record to the bookshelf list ui

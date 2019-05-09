@@ -335,9 +335,9 @@ function cf_cover(idx) {
 			'<div class="ui-grid-a">' +
 				'<div class="ui-block-a">' +
 						 '<fieldset data-role="controlgroup" data-type="horizontal">' +
-							'<label data-inline="true" for="nreset">Allow Resets</label>' +
+							'<label data-inline="true" for="nreset">Allow Book Resets</label>' +
 							'<input data-theme="a" data-inline="true" data-mini="true" id="nreset" name="nreset" type="checkbox" ' + ((book.reset == "y") ? "checked=\"checked\"" : "") + '/>' +
-							'<label data-inline="true" for="nreplay">Allow Replays</label>' +
+							'<label data-inline="true" for="nreplay">Allow Game Replays</label>' +
 							'<input data-theme="a" data-inline="true" data-mini="true" id="nreplay" name="nreplay" type="checkbox" ' + ((book.replay == "y") ? "checked=\"checked\"" : "") + '/>' +
 						'</fieldset>' +	
 				'</div>' +
