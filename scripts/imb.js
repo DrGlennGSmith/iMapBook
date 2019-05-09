@@ -1709,61 +1709,42 @@ function drop(ev) {
 function drop_object(source_id, target_id) {
     var container_count = $("#" + target_id).attr("count");
     var container_children_count = $("#" + target_id).children().length; // number of objects currently inside the container
-    if (debug)
+    if (debug) {
         console.log("drop-1: source_id=" + source_id + " target_id=" + target_id + " children_count=" + container_children_count + " / " + container_count);
+	}
 
     if ((typeof container_count == 'undefined') || (container_count <= container_children_count)) { // container count is undefined or full
-        if (debug)
+        if (debug) {
             console.log("Invalid or full container!");
+		}
         return;
     }
 
-    var clone = $("#" + source_id).clone(); // create the clone
-    // extract original width and height
-    var clone_width = $(clone).css("width").replace('%', '');
-    var clone_height = $(clone).css("height").replace('%', '');
-    var xadj = clone_width / clone_height;
-    var yadj = clone_height / clone_width;
-    xadj = xadj > 1 ? 1 : Math.ceil(xadj * 100) / 100;
-    yadj = yadj > 1 ? 1 : Math.ceil(yadj * 100) / 100;
-
+    var clone = $("#" + source_id).clone(); // create the clone 
+    
     // calculate new size of the clone
-    var container_width = $("#" + target_id).attr("width"); // original % width
-    var container_height = $("#" + target_id).attr("height"); // original % height
-
-    if (debug)
-        console.log("OBJECT DEBUG: object: " + xadj + "," + yadj + " container: " + container_width + "," + container_height);
-
-    if (container_width > container_height) { // target width > target height
-        var ratio = Math.floor(container_width / container_height);
-        var columns = Math.min(container_count, ratio);
-        clone_width = xadj * (100 / columns);					// clone width is the 100% / columns
-        clone_height = yadj * (100 / Math.ceil(container_count / columns)); 	// clone height is the 100% / (max count / columns)
-        if (debug)
-            console.log("OBJECT DEBUG 1 - ratio: " + ratio + " rows:" + rows + " clone_width:" + clone_width + " clone_height:" + clone_height);
-    } else if (container_width < container_height) { // target width < target height
-        var ratio = Math.floor(container_height / container_width);
-        var rows = Math.min(container_count, ratio);
-        clone_width = xadj * (100 / Math.ceil(container_count / rows)); 	// clone width is the 100% / (max count / rows)
-        clone_height = yadj * (100 / rows);					// clone height is the 100% / rows
-        if (debug)
-            console.log("OBJECT DEBUG 2 - ratio: " + ratio + " rows:" + rows + " clone_width:" + clone_width + " clone_height:" + clone_height);
-    } else { // target width = target height
-        if (xadj > yadj) {
-            clone_width = xadj * (100 / Math.ceil(Math.sqrt(container_count))); 	// clone width is the 100% / square root of the max count
-            clone_height = yadj * clone_width;
-        } else { // opposite
-            clone_height = yadj * (100 / Math.ceil(Math.sqrt(container_count)));
-            clone_width = xadj * clone_height;
-        }
-        if (debug)
-            console.log("OBJECT DEBUG 3 - clone_width:" + clone_width + " clone_height:" + clone_height);
-    }
+    var clone_width;
+    var clone_height;
+    var container_width = $("#" + target_id).width(); // original width
+    var container_height = $("#" + target_id).height(); // original height
+    var source = $("#" + source_id);
+	var source_width = source.width();
+	var source_height = source.height();
+	var ratio_heights = container_height / source_height;
+	var ratio_widths = container_width / source_width;
+	if (ratio_widths > ratio_heights) {
+		clone_height = container_height;
+		clone_width = source_width * ratio_heights;
+	} else {
+		clone_width = container_width;
+		clone_height = source_height * ratio_widths;
+	}
 
     var clone_id = source_id + "clone" + container_children_count + target_id; // create a unique clone identifier
 
-    if (debug)
+    if (debug) {
         console.log("drop-2: clone_id=" + clone_id + " width=" + clone_width + " height=" + clone_height);
+	}
 
     // now modify clone's attributes
     $(clone).attr("id", clone_id);
@@ -1776,11 +1757,11 @@ function drop_object(source_id, target_id) {
     $(clone).click(function () {
         remove(target_id, clone_id, source_id);
     });
-    $(clone).css("width", clone_width + "%");
-    $(clone).css("height", clone_height + "%");
-    $(clone).css("float", "left"); // AUTO PLACEMENT!
+    $(clone).css("width", clone_width);
+    $(clone).css("height", clone_height);
+    //$(clone).css("float", "left"); // AUTO PLACEMENT!
 
-    $("#" + target_id).append(clone); // insert into container
+    $(clone).appendTo("#" + target_id); // insert into container
 
     if ($("#" + source_id).attr("clone") == 'n') { // you can only "clone" it once
         $("#" + source_id).hide();
