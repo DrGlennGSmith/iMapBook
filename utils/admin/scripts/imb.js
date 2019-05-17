@@ -997,7 +997,7 @@ function refresh_chat_messages(data) {
 			if (newDate > chat_updater.dates[i]) {
 				chat_updater.dates[i] = newDate;
 			}
-			var src = ((msg[6] > 0) ? (chat_book_topic.books[msg[5]].name + ': ' + ((chat_book_topic.books[msg[5]].topics[msg[6]]) ? chat_book_topic.books[msg[5]].topics[msg[6]] : 'Unknown Topic') ) : 'Unstructured Chat');
+			var src = get_chat_source_name(msg[5], msg[6]);
 			var chatEntry = $(create_chat_message(msg[0], msg[1], newDate, msg[3], src));
 			chatEntry.attr("data-group", bookclub)
 				.attr("data-book", msg[5])
@@ -1017,6 +1017,18 @@ function refresh_chat_messages(data) {
 			container.scrollTop(container[0].scrollHeight);
 		}
 	});	
+}
+// to get the source of a chat entry, handling cases where the topic or book has disappeared
+function get_chat_source_name(book_id, topic_id) {
+	var book_name = 'Unknown Book';
+	var topic_name = (topic_id > 0) ? 'Unknown Topic' : 'Unstructured Chat';
+	if ((book_id > 0) && chat_book_topic.books[book_id]) {
+		book_name = chat_book_topic.books[book_id].name;
+		if ((topic_id > 0) && chat_book_topic.books[book_id].topics[topic_id]) {
+			topic_name = chat_book_topic.books[book_id].topics[topic_id];
+		}
+	}
+	return book_name + ': ' + topic_name;
 }
 // 
 function select_chat_group_to_send() {
