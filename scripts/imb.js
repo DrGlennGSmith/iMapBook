@@ -1140,13 +1140,23 @@ function imb_display_page(msg) {
 // Used to make the word definitions interactive
 //--------------------------------------------------------------------------------------------------
 function imb_activate_definition(node_selector) {
-    $(node_selector).find('.defWord').click(function (e) {
-		var container = $('#slideDef');
+    $(node_selector).find('.defWord').on('click touchstart', function (e) {
+        e.preventDefault()
+        var container = $('#slideDef');
         if (container.css('display') == "none") {
-            container.text(imb_display_definition($(this).text()))
-				.css("top", e.pageY)
-				.css("left", e.pageX)
-				.show(100);
+            if (e.originalEvent.touches) {
+                touch = e.originalEvent.touches[0];
+            
+                container.text(imb_display_definition($(this).text()))
+                .css("top", touch.pageY)
+                .css("left", touch.pageX)
+                .show(100);
+            } else {
+                container.text(imb_display_definition($(this).text()))
+                .css("top", e.pageY)
+                .css("left", e.pageX)
+                .show(100);
+            }
         } else {
             container.hide(100);
         }
