@@ -279,7 +279,7 @@ function cf_cover(idx) {
 					'</div>' +
 				'</div>' +
 			'</div>' +
-			// ---------------------------------------------------- author | title | language
+			// ---------------------------------------------------- author | title | cover sound
 			'<div class="ui-grid-b">' +
 				'<div class="ui-block-a">' +
 					'<div class="imb_form_label">' +
@@ -295,21 +295,21 @@ function cf_cover(idx) {
 				'</div>' +
 				'<div class="ui-block-c">' +
 					'<div class="imb_form_label">' +
+						'<label for="imb_cover_sound">Cover Sound</label>' +
+						'<a href="#" data-role="button" data-mini="true" id="imb_cover_sound" name="imb_cover_sound" class="imb_media_btn">' + ((book.sound == "") ? "None" : book.sound) + '</a>' +
+					'</div>' +
+				'</div>' +
+			'</div>' +
+			// ---------------------------------------------------- language | voice | NLP model | NLP filename
+			'<div class="ui-grid-c">' +
+				'<div class="ui-block-a">' +
+					'<div class="imb_form_label">' +
 						'<label for="nlanguage">Language</label>' +
 						'<select data-theme="a" data-mini="true" data-native-menu="false" id="nlanguage" name="nlanguage">' +
 							'<option value="en" ' + ((book.language == "en") ? "selected" : "") + '>English</value>' +
 							'<option value="es" ' + ((book.language == "es") ? "selected" : "") + '>Spanish</value>' +
 							'<option value="nl" ' + ((book.language == "nl") ? "selected" : "") + '>Dutch</value>' +
 						'</select>' +
-					'</div>' +
-				'</div>' +
-			'</div>' +
-			// ---------------------------------------------------- cover sound | voice 
-			'<div class="ui-grid-b">' +
-				'<div class="ui-block-a">' +
-					'<div class="imb_form_label">' +
-						'<label for="imb_cover_sound">Cover Sound</label>' +
-						'<a href="#" data-role="button" data-mini="true" id="imb_cover_sound" name="imb_cover_sound" class="imb_media_btn">' + ((book.sound == "") ? "None" : book.sound) + '</a>' +
 					'</div>' +
 				'</div>' +
 				'<div class="ui-block-b">' +
@@ -324,6 +324,21 @@ function cf_cover(idx) {
 					'</div>' +
 				'</div>' +
 				'<div class="ui-block-c">' +
+					'<div class="imb_form_label">' +
+						'<label for="nnlp_model">NLP Model</label>' +
+						'<select data-theme="a" data-mini="true" data-native-menu="false" id="nnlp_model" name="nnlp_model">' +
+							'<option value=" "'  + ((book.nlp_model == " ") ? "selected" : "") + '>none</value>' +
+							'<option value="A" ' + ((book.nlp_model == "A") ? "selected" : "") + '>A</value>' +
+							'<option value="B" ' + ((book.nlp_model == "B") ? "selected" : "") + '>B</value>' +
+							'<option value="C" ' + ((book.nlp_model == "C") ? "selected" : "") + '>C</value>' +
+						'</select>' +
+					'</div>' +
+				'</div>' +
+				'<div class="ui-block-d">' +
+					'<div class="imb_form_label">' +
+						'<label for="nnlp_file">NLP File</label>' +
+						'<input id="nnlp_file" name="nnlp_file" type="text" value="' + book.nlp_file + '"/>' +
+					'</div>' +
 				'</div>' +
 			'</div>' +
 			// ---------------------------------------------------- abstract
@@ -598,7 +613,7 @@ function cf_state(idx, only_state_form) {
 					'<a href="#" data-role="button" onclick="delete_state(' + idx + ');" data-theme="b" data-inline="true" data-mini="true" id="imb_state_delete_btn">Delete State</a>' +
 			'</div>' +
 		'</div>' +
-		'<div class="ui-grid-b">' +
+		'<div class="ui-grid-c">' +
 			'<div class="ui-block-a">' +
 				'<div class="imb_form_label">' +
 					'<label for="imb_state_sound">State Sound</label>' +
@@ -615,6 +630,12 @@ function cf_state(idx, only_state_form) {
 				'<div class="imb_form_label">' +
 					'<label for="imb_state_label">State Label</label>' +
 					'<input data-mini="true" id="imb_state_label" type="text" value="' + state.label + '" />' +
+				'</div>' +
+			'</div>' +
+			'<div class="ui-block-d">' +
+				'<div class="imb_form_label">' +
+					'<label for="imb_state_nlp">NLP Question</label>' +
+					'<input data-mini="true" id="imb_state_nlp" type="text" value="' + state.nlp_name + '" />' +
 				'</div>' +
 			'</div>' +
 		'</div>' +
@@ -707,7 +728,7 @@ function cf_state(idx, only_state_form) {
 						'<div class="imb_form_label">' +
 							'<label for="ntrancat">Page Type</label>' +
 							'<select data-theme="a" data-inline="true" data-mini="true" data-native-menu="false" id="ntrancat" name="ntrancat">';
-								for (var x = 1; x < 7; x++) {
+								for (var x = 1; x < 8; x++) {
 									cf += '<option value="' + x + '">' + imb_transition_label(x.toString()) + '</option>';
 								}
 							cf += '</select>' +
@@ -831,7 +852,7 @@ function cf_transition(idx,state_idx) {
 				if (transition.type == 1 || transition.type == 5) { // counter, bitmask
 					cf += '<a href="#" data-role="button" data-theme="a" data-inline="true" data-mini="true" id="imb_visual_editor_btn' + idx + '" class="imb_visual_editor_btn">Visual Editor</a>';
 				}
-				if (transition.type == 1 || transition.type == 2 || transition.type == 5 || transition.type == 6) { // counter, countdown, bitmask, variable
+				if (transition.type == 1 || transition.type == 2 || transition.type == 5 || transition.type == 6 || transition.type == 7) { // counter, countdown, bitmask, variable, nlp
 					cf += '<a href="#" data-role="button" onclick="transition_to_response_editor(' + state_idx + ', ' + idx + ');" data-theme="a" data-inline="true" data-mini="true" id="imb_response_editor_btn">Response Editior</a>';
 				}
 				cf += '<a href="#" data-role="button" data-theme="c" data-inline="true" data-mini="true" id="imb_transition_copy_btn">Copy Transition</a>' +
@@ -1061,6 +1082,9 @@ function imb_transition_label(type) {
 		break;
 		case "6":
 			return "Variable";
+		break;
+		case "7":
+			return "NLP Matching";
 		break;
 		default:
 			return "unknown";

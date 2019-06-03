@@ -29,11 +29,12 @@ var color_matrix = [
 	{id: 7, color: 'violet', code: '#CC99FF', type: 'interrogative', subtype: '', label: 'Violet interrogative'},
 	{id: 8, color: 'white', code: '#FFFFFF', type: 'article', subtype: '', label: 'White article'},
 	{id: 100, color: 'gray', code: '#DDDDDD', type: 'icon', subtype: '', label: 'Clickable icon'},
-	{id: 101, color: 'gray', code: '#DDDDDD', type: 'text', subtype: '', label: 'Free-form text'}
+	{id: 101, color: 'gray', code: '#DDDDDD', type: 'text', subtype: '', label: 'Record Feedback Only'},
+	{id: 102, color: 'gray', code: '#DDDDDD', type: 'text', subtype: '', label: 'Free-form text'}
 ];
 
 // book is an object as defined below
-function Book (id, location, author, title, icon, language, color_theme, voice, sound, reset, replay, nav_timer, nav_popup, abstract_text, version) {
+function Book (id, location, author, title, icon, language, color_theme, voice, sound, reset, replay, nav_timer, nav_popup, abstract_text, version, nlp_model, nlp_file) {
 	this.book_id = id; // bookshelf book identifier - unique and constant inside the bookshelf
 	this.definition_list = new Array(); // array of definition objects
 	this.registry = new Array();		// array of variable objects
@@ -60,6 +61,8 @@ function Book (id, location, author, title, icon, language, color_theme, voice, 
 	this.tts = (this.voice.length > 3) ? 'on' : 'off'; // decide if tts is on/off by default based on presence/absence of voice attributes
 	this.modified = "false"; // used for merge logic when writing the default.xml in concurrent user environment
 	this.discussion_list = new Array();
+	this.nlp_model = (nlp_model !== undefined) ? nlp_model : '';
+	this.nlp_file = (nlp_file !== undefined) ? nlp_file : '';
 }
 // definition (word) is an object as defined below and loaded once along with the book upon successful authentication
 function Definition (word, text) {
@@ -75,7 +78,7 @@ function Variable (name, value, min, max, variance) {
 	this.variance = variance;
 }
 // page is an object as defined below and loaded once along with the book upon successful authentication
-function Page (type, chapter_number, hidden, character_number, timeout, timer_last, timer_next, nlp_feedback) {
+function Page (type, chapter_number, hidden, character_number, timeout, timer_last, timer_next) {
 	this.type = type; // 1 = text only, 2 = inference game, etc.
 	this.state_list = new Array(); // array of states
 	this.state_list_idx = 0; // defaults to first state in the list.  Used to implement state bookmarks
@@ -89,10 +92,9 @@ function Page (type, chapter_number, hidden, character_number, timeout, timer_la
 	this.allow_next = true;
 	this.score = 0;
     this.complete = 0; // number of times this page/game was complete since last game reset
-	this.nlp_feedback = (nlp_feedback == 'y');
 }
 // state is an object as defined below and loded unpon user's first selection
-function State (sound, xloc, yloc, label, text, file_name, url, character, avatar) {
+function State (sound, xloc, yloc, label, text, file_name, url, character, avatar, nlp_name) {
 	this.sound = (typeof sound != 'undefined') ? sound : ''; // OPTIONAL file to play when state is reached
 	this.text = (typeof text != 'undefined') ? text : ''; // // OPTIONAL HTML formatted content of the page or game intro
 	this.xloc = (typeof xloc != 'undefined') ? xloc : 0;
@@ -102,6 +104,7 @@ function State (sound, xloc, yloc, label, text, file_name, url, character, avata
 	this.image = new IMBImage(file_name); // image object with hotspots
 	this.char_idx = (typeof character != 'undefined') ? Math.max(Number(character), 0) : 0;
 	this.avatar_idx = (typeof avatar != 'undefined') ? Math.max(Number(avatar), 0) : 0;
+	this.nlp_name = (nlp_name !== undefined) ? nlp_name : '';
 	this.lexicon = new Lexicon('','',''); // lexicon object with responses, label, text and error attributes
 	this.transition_list = new Array(); // state with empty transition_list is the last state
 	this.transition_list_idx = 0;
@@ -160,7 +163,7 @@ function Word (type, sound, icon, word) {
 	this.word = word;
 }
 // transition is an object as defined below
-function Transition (type, trigger, variable_idx, range, next_state_idx, label, scenario_id, nlp_match) {
+function Transition (type, trigger, variable_idx, range, next_state_idx, label, scenario_id) {
 	this.type = type; // 1 = counter, 2 = countdown, 3 = timer, 4 = random, 5 = bitmask, etc.
 	this.trigger = trigger; // used by state machine and can be a number of user inputs, seconds, a number or random selections, etc. 
 	this.variable_idx = variable_idx;
@@ -177,15 +180,7 @@ function Transition (type, trigger, variable_idx, range, next_state_idx, label, 
 	//	this.next_state_idx = page.state_list.length + 1;
 	//}
 	this.label = (typeof label != 'undefined') ? label : '';
-    this.scenario_id = (typeof scenario_id !== 'undefined') ? (scenario_id) : 0;
-	// only in cases where the NLP type is used
-	if (nlp_match != undefined) {
-		this.nlp_min_match = Math.max(0, Math.min(100, nlp_match));
-	}
-	// by default, all NLP transitions have a 70% match threshold
-	else if (type == 7) {
-		this.nlp_min_match = 70;
-	}
+	this.scenario_id = (typeof scenario_id !== 'undefined') ? (scenario_id) : 0;
 }
 // response is an object as defined below
 function Response (type, sound, weight, bits, asub, text_input, text_output, input_character_number, input_avatar_number, output_character_number, output_avatar_number) {
@@ -300,7 +295,8 @@ function imb_load_bookshelf_content(bkarr) {
 					var book = new Book( $(this).attr('book_id'), $(this).attr('location'), $(this).attr('author'),
 						$(this).attr('title'), $(this).attr('icon'), $(this).attr('language'), $(this).attr('coloring'),
 						$(this).attr('voice'), $(this).attr('sound'), $(this).attr('reset'), $(this).attr('replay'),
-						$(this).attr('nav_timer'), $(this).attr('nav_popup'), $(this).text() );
+						$(this).attr('nav_timer'), $(this).attr('nav_popup'), $(this).text(), 0,
+						$(this).attr('nlp_model'), $(this).attr('nlp_file') );
 					book_list.push(book);
 				}
 			});
@@ -327,6 +323,7 @@ function imb_load_characters(success_handler) {
         type: "GET",
 		url: "data/avatars/characters.xml",
 		dataType: "xml",
+		cache: false,
 		async: true,
 		success: function(xml, textStatus, jqXHR) {
 			character_list = {}; // clear the old list
@@ -402,12 +399,11 @@ function imb_load_book_content(location) {
 				
 				$(this).find('page').each(function(idx) { // page
 					var page = new Page( $(this).attr('type_id'), $(this).attr('chapter_number'), $(this).attr('hidden'),
-						$(this).attr('character'), $(this).attr('timeout'), $(this).attr('timer_last'), $(this).attr('timer_next'),
-						$(this).attr('nlp_feedback') );
+						$(this).attr('character'), $(this).attr('timeout'), $(this).attr('timer_last'), $(this).attr('timer_next') );
 					book.page_list.push(page);	
 //if (debug) console.log("XML PAGE: " + page.toSource());	
 					$(this).find('state').each(function(idx) { // load state content
-						var state = new State($(this).attr('sound'), $(this).attr('xloc'), $(this).attr('yloc'), $(this).attr('label'), $(this).find('text').text(), $(this).find('image').attr('file_name'), $(this).attr('url'), $(this).attr('character'), $(this).attr('avatar'));
+						var state = new State($(this).attr('sound'), $(this).attr('xloc'), $(this).attr('yloc'), $(this).attr('label'), $(this).find('text').text(), $(this).find('image').attr('file_name'), $(this).attr('url'), $(this).attr('character'), $(this).attr('avatar'), $(this).attr('nlp_name'));
 						if  ($(this).find('image')) { // load image data
 							$(this).find('image').find('hotspot').each( function() { // load image hotspots
 								var hotspot = new Hotspot($(this).attr('loop'));
@@ -447,7 +443,7 @@ function imb_load_book_content(location) {
 							$(this).find('transition').each(function() { // load transitions
 								var transition = new Transition( $(this).attr('type_id'), $(this).attr('trigger'), $(this).attr('variable_idx'),
 									$(this).attr('range'), $(this).attr('next_state_idx'), $(this).attr('label'),
-									$(this).attr('scenario_id'), $(this).attr('nlp_min_match') );
+									$(this).attr('scenario_id') );
 								$(this).find('response').each(function() {
 									var input = $(this).find('text_input');
 									var output = $(this).find('text_output');
@@ -564,4 +560,11 @@ function imb_type_color(type_id, property) {
         }
     }
     return rv;
+}
+// create a full file-path for NLP models
+function imb_nlp_model_filepath(book) {
+	if (book && book.nlp_model && book.nlp_file) {
+		return '/imapbookNlp/models/model' + book.nlp_model + '_' + book.nlp_file + '.p';
+	}
+	return '';
 }

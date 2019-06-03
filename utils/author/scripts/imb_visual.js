@@ -1786,7 +1786,7 @@ function start_jsPlumb(book_list_idx, page_idx){
 				new_transition_html = '<form id="new_transition"><div class="imb_form_label">' +
 								'<label for="ntrancat">Choose Transition Type</label>' +
 								'<select data-theme="a" data-inline="true" data-mini="true" data-native-menu="false" id="ntrancat" name="ntrancat">';
-									for (var x = 1; x < 7; x++) {
+									for (var x = 1; x < 8; x++) {
 										new_transition_html += '<option value="' + x + '">' + imb_transition_label(x.toString()) + '</option>';
 									}
 								new_transition_html += '</select>' +

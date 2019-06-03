@@ -299,35 +299,41 @@ function vpf_match(book_id, scenario_id, user_input) {
     return rval;
 }
 
-function nlp_match(user_input, correct) {
-    if (debug) console.log('nlp_match: ' + user_input + ' ' + correct);
-    if (location.hostname === '' || user_input == '' || correct == '')
-        return false; // skip ajax if local or missing inputs
-    var rval = false;
+function nlp_match(question, user_input, book) {
+    var rval = {};
+    if (debug) { console.log('nlp_match: ' + question + ' ' + user_input + ' ' + book.book_id); }
+    if (location.hostname === '' || question == '' || user_input == '')
+        return rval; // skip ajax if local or missing inputs
+	
     $.ajax({
         type: "GET",
-        url: NLP_url + "/compare",
+        url: "service.php?action=nlp_match",
         data: {
-			user: user_input.trim(),
-			correct: correct.trim()
+			imb_model: book.nlp_model,
+			imb_file: imb_nlp_model_filepath(book),
+			imb_question: question.trim(),
+			imb_response: user_input.trim()
         },
         dataType: "json",
         async: false,
         success: function (jd) {
             if (debug)
                 console.log(jd);
-            if (!jd) {
+            if (!jd || (jd.score === undefined)) {
 				console.error("No response from NLP");
-			} else if (!jd.success) {
-				window.alert(jd.error);
-            } else {
+			} else if (!jd.error) {
 				rval = jd;
+            } else {
+				console.error('Error occurred processing NLP request. Perhaps your question isn\'t in the model?');
             }
         },
         error: function () {
             window.alert("No response from NLP");
         }
     });
+	if (debug) {
+		console.log(rval);
+	}
     return rval;
 }
 

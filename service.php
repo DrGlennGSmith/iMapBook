@@ -263,6 +263,37 @@ switch ($action) {
         echo json_encode((object) array('status' => 'success', 'state' => $response_state, 'value' => $response_text, 'character' => $response_character, 'audio' => $response_audio));
         break;
 	
+	// nlp matching
+	case "nlp_match":
+		$model = (isset($_GET["imb_model"])) ? $_GET["imb_model"] : $_POST["imb_model"];
+		$filename = (isset($_GET["imb_file"])) ? $_GET["imb_file"] : $_POST["imb_file"];
+		$question = (isset($_GET["imb_question"])) ? $_GET["imb_question"] : $_POST["imb_question"];
+		$response = (isset($_GET["imb_response"])) ? $_GET["imb_response"] : $_POST["imb_response"];
+	
+		$url = 'http://octonion.data-lab.si:8787/predict';
+		$data = array(
+			'modelId' => $model, 
+			'modelFilename' => $filename,
+			'question' => $question,
+			'questionResponse' => $response
+		);
+
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/json\r\n",
+				'method'  => 'POST',
+				'content' => json_encode($data)
+			)
+		);
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+		if ($result === FALSE) {
+			echo json_encode((object) array('status' => 'error', 'score' => -1));
+		} else {
+			echo $result;
+		}
+		break;
+	
 	// get social groups available for this user
     case "social_groups_list":
 		global $DB;

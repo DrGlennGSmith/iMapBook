@@ -725,12 +725,12 @@ function load_state(sid) {
                 sts = sts + 'color:' + imb_type_color($(this).attr('type'), 'code') + ';"'; // set display colors
 
                 if (page.chapter_number == 'Test') { // this is test lexicon so break between each item
-                    if ($(this).attr('type') != '101') { // break before each new item
+                    if ($(this).attr('type') != '101' && $(this).attr('type') != '102') { // break before each new item
                         $("#imb_game_words_matrix").append("</br>");
                     }
                 }
 
-                if ($(this).attr('type') != '101') {
+                if ($(this).attr('type') != '101' && $(this).attr('type') != '102') {
                     $("#imb_game_words_matrix").append("<input type=\"button\" class=\"imb_key\"" + sts + " value=\"" + $(this).attr('word') + "\" on" + user_event + "=\"btn_press('" + $(this).attr('word').replace(/\'/g, '\\\'') + "', '" + $(this).attr('sound') + "', " + $(this).attr('type') + ");\"/>");
                 } else {
                     if (state.lexicon.word_list.length == 1) { // if this is the only one item then automatically display a text box
@@ -1405,6 +1405,7 @@ function imb_transition_check_response(inftxt) {
     var page = book.page_list[book.page_list_idx];
     var state = page.state_list[page.state_list_idx];
     var next_state_idx = -1;
+	var nlp_match_score = -1;
     var match = 0;
     var vpf_text = '';
 
@@ -1417,23 +1418,18 @@ function imb_transition_check_response(inftxt) {
             if (transition.scenario_id != 0) { // try to match against VPF
                 vpf_text = vpf_match(book.book_id, transition.scenario_id, $.trim(inftxt));
             }
-			// find the best match on the NLP server
-			var nlpMatchedIdx = -1;
-			if (transition.type == 7) {
-				var result = {correctness: 0};
-				$.each(transition.response_list, function (idx, response) {
-					var tmp = nlp_match(response.text_input, inftxt);
-					if (tmp.correctness > transition.nlp_min_match && tmp.correctness > result.correctness) {
-						result = tmp;
-						nlpMatchedIdx = idx;
-					}
-				});
+			
+			// if nlp check against the state hasn't happened yet, do it now
+			if ((transition.type == 7) && (nlp_match_score < 0)) {
+				var nlp_test_result = nlp_match(state.nlp_name, inftxt, book);
+				nlp_match_score = (nlp_test_result) ? nlp_test_result.score : -1;
 			}
+			
 			// then, for each response
             $.each(transition.response_list, function (idx, response) {
                 // this will match against a response OR output from VPF service.
                 // !!! YOU MUST HAVE AT LEAST ONE positive response under transition for this to work!!!
-                if (vpf_text != '' || (idx === nlpMatchedIdx) || $.trim(inftxt) == response.text_input) { // transition response match
+                if (vpf_text != '' || (transition.trigger == nlp_match_score) || $.trim(inftxt) == response.text_input) { // transition response match
                     play_sound(response.sound, book.location); // play associated sound (if any).
                     match = 1;
                     // play response output using TTS engine (if on)
@@ -1480,6 +1476,9 @@ function imb_transition_check_response(inftxt) {
                             next_state_idx = transition.next_state_idx;
                         } else if (transition.type == 6 && book.registry[transition.variable_idx].value >= transition.trigger) {
                             next_state_idx = transition.next_state_idx;
+						} else if (transition.type == 7) {
+							// if you get here as NLP, then a match occurred so transition
+							next_state_idx = transition.next_state_idx;
                         } else { // otherwise, just update feedback
                             imb_display_feedback(1);
                         }
@@ -1522,7 +1521,7 @@ function imb_transition_check_response(inftxt) {
                     next_state_idx = transition.next_state_idx;
                 }
             }
-        } // TODO: add more transition types here
+		} // TODO: add more transition types here
     });
 
     if (match == 0) { // none of the responses in any transitions matched

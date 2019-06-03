@@ -172,9 +172,11 @@ $(document).ready(function() { // document loaded and DOM is ready
 		book.sound = (($('#imb_cover_sound', form).text() == "None") ? "" : $('#imb_cover_sound', form).text());
 		book.reset = ($('#nreset', form).is(':checked')) ? 'y' : 'n';
 		book.replay = ($('#nreplay', form).is(':checked')) ? 'y' : 'n';
+		book.nlp_model = $('#nnlp_model', form).val();
+		book.nlp_file = $('#nnlp_file', form).val();
 		book.modified = (book.modified === "new") ? "new" : "true"; // used in merge logic in services.php ( indicates modified element ). Don't set if the book is new.
 		book.abstract_text = $('#nabstract', form).val();
-		$(this).closest(".imb_bookshelf_collapsible").find(".imb_bookshelf_book_title").html($('#ntitle', form).val() + ' [ID:' + $('#nbook_id', form).val() + ']');
+		$(this).closest(".imb_bookshelf_collapsible").find(".imb_bookshelf_book_title").html($('#ntitle', form).val() + ' [ID:' + book.book_id + ']');
 		imb_save_flag(1,1);
 		return false;
 	});
@@ -522,9 +524,6 @@ $(document).ready(function() { // document loaded and DOM is ready
 			page.state_list[0].sound = (($('#imb_page_sound', form).text() == "None") ? "" : $('#imb_page_sound', form).text());
 			page.state_list[0].text = $('#ntext', form).val();
 		}
-		if (page.type == 2) {
-			page.nlp_feedback = ($('#nlp_feedback', form).val() == "y");
-		}
 		// update display
 		$(this).closest(".imb_page_collapsible").find(".imb_page_title").html('Page ' + (idx + 1) + ' ( ' + imb_page_type_name(page.type) + ' ) ' + page.chapter_number);
 		imb_save_flag(2,1);
@@ -670,6 +669,7 @@ $(document).ready(function() { // document loaded and DOM is ready
 		state.label = ($('#imb_state_label', form).val());
 		state.char_idx = Number($('.imb_state_avatar_btn', form).data("character"));
 		state.avatar_idx = Number($('.imb_state_avatar_btn', form).data("avatar"));
+		state.nlp_name = $('#imb_state_nlp', form).val().trim();
 		// update display
 		$("#state_label_cont" + idx).text(state.label + ' (' + (idx + 1) + ')');
 		$(this).closest(".imb_state_collapsible").find(".yellow_state").html('State ' + (idx + 1)); /* + ' (Score: ' + page.state_list[idx].score + ')');   -----------SCORE HAS BEEN DEPRECATED------------------------------*/
@@ -939,9 +939,6 @@ $(document).ready(function() { // document loaded and DOM is ready
 		transition.scenario_id = $('#vpfid', form).val();
 		if (transition.type == 6) {
 			transition.variable_idx = $("#nvaridx", form).val();
-		}
-		else if (transition.type == 7) {
-			transition.nlp_min_match = Math.max(0, Math.min(100, +($("#nlp_match", form).val())));
 		}
 		// update display
 		if (transition.type == 4) {

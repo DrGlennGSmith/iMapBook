@@ -14,7 +14,6 @@ var pageIntervalVar = 0; // used by setInterval() in automatic display updates (
 var intervalVar = 0; // used by setInterval() in automatic display updates (such as counters)
 var intervalAnimateVar = 0; // used to animate frames of image objects with setInterval()
 var FPS = 50; // animate # of frames per second
-var NLP_url = "//localhost:17650"; // url for the NLP server
 var socialManager = new SocialManager(); // used to handle messages and new ones
 
 var audio_player = new Audio(); // define a global audio object

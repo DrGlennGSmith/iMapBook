@@ -66,14 +66,19 @@ function imb_book_directory(new_dir, new_dir_copy, dir_action) {
 	});
 	return rv;
 }
-
 // save bookshelf data to a file
 function imb_save_bookshelf_content(bookshelf_file) {
 	var xmldata = '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<covers>\n';
 	$.each(book_list, function() {
-		xmldata += '	<cover book_id="' + $(this).attr('book_id') + '" location="' + $(this).attr('location') + '" author="' + cleanXML($(this).attr('author')) + '" title="' + cleanXML($(this).attr('title')) + '" icon="' + cleanXML($(this).attr('icon')) + '" language="' + $(this).attr('language') + '" coloring="' + $(this).attr('color_theme') + '" voice="' + $(this).attr('voice') + '" sound="' + cleanXML($(this).attr('sound')) + '" reset="' + $(this).attr('reset') + '" replay="' + $(this).attr('replay') + '" modified="' + $(this).attr('modified') + '"><![CDATA[' + $(this).attr('abstract_text') + ']]></cover>\n';
+		xmldata += '	<cover book_id="' + $(this).attr('book_id') + '" location="' + $(this).attr('location') + '" author="' + cleanXML($(this).attr('author'))
+		+ '" title="' + cleanXML($(this).attr('title')) + '" icon="' + cleanXML($(this).attr('icon')) + '" language="' + $(this).attr('language') 
+		+ '" coloring="' + $(this).attr('color_theme') + '" voice="' + $(this).attr('voice') + '" sound="' + cleanXML($(this).attr('sound')) 
+		+ '" reset="' + $(this).attr('reset') + '" replay="' + $(this).attr('replay') + '" modified="' + $(this).attr('modified')
+		+ '" nlp_model="' + cleanXML($(this).attr('nlp_model').trim()) + '" nlp_file="' + cleanXML($(this).attr('nlp_file').trim())
+		+ '"><![CDATA[' + $(this).attr('abstract_text') + ']]></cover>\n';
 	});
-	xmldata += "</covers>"
+	xmldata += "</covers>";
+	console.log(xmldata);
 	var bookshelf_file_path = "data/bookshelves/" + bookshelf_file;
 	var bookshelfContainsBooks = xmldata.search("book_id"); // seach for book_id to make sure there is at least one book in the bookshelf.xml file.
 	if (bookshelfContainsBooks > -1) { // if there is at least one book, then run it through the XML parser.
@@ -148,10 +153,10 @@ function imb_save_book_content(bidx) {
 
 	// PAGES
 	$.each(book.page_list, function() {
-		xmldata += '	<page type_id="' + $(this).attr('type') + '" chapter_number="' + cleanXML($(this).attr('chapter_number')) + '" hidden="' + $(this).attr('hidden') + (($(this).attr('char_idx') > 0) ? '" character="' + $(this).attr('char_idx') : '') + '" timeout="' + $(this).attr('timeout') + '" timer_last="' + cleanXML($(this).attr('timer_last')) + '" timer_next="' + cleanXML($(this).attr('timer_next')) + ($(this).attr('nlp_feedback') ? '" nlp_feedback="y' : '') + '">\n';
+		xmldata += '	<page type_id="' + $(this).attr('type') + '" chapter_number="' + cleanXML($(this).attr('chapter_number')) + '" hidden="' + $(this).attr('hidden') + (($(this).attr('char_idx') > 0) ? '" character="' + $(this).attr('char_idx') : '') + '" timeout="' + $(this).attr('timeout') + '" timer_last="' + cleanXML($(this).attr('timer_last')) + '" timer_next="' + cleanXML($(this).attr('timer_next')) + '">\n';
 		// STATES
 		$.each($(this).attr('state_list'), function() {
-			xmldata += '		<state sound="' + cleanXML($(this).attr('sound')) + '" xloc="' + cleanXML($(this).attr('xloc')) + '" yloc="' + cleanXML($(this).attr('yloc')) + '" label="' + cleanXML($(this).attr('label')) + '" url="' + cleanXML($(this).attr('url')) + (($(this).attr('char_idx') > 0) ? '" character="' + $(this).attr('char_idx') : '') + (($(this).attr('avatar_idx') > 0) ? '" avatar="' + $(this).attr('avatar_idx') : '') + '">\n';
+			xmldata += '		<state sound="' + cleanXML($(this).attr('sound')) + '" xloc="' + cleanXML($(this).attr('xloc')) + '" yloc="' + cleanXML($(this).attr('yloc')) + '" label="' + cleanXML($(this).attr('label')) + '" url="' + cleanXML($(this).attr('url')) + (($(this).attr('char_idx') > 0) ? '" character="' + $(this).attr('char_idx') : '') + (($(this).attr('avatar_idx') > 0) ? '" avatar="' + $(this).attr('avatar_idx') : '') + (($(this).attr('nlp_name') != '') ? '" nlp_name="' + $(this).attr('nlp_name') : '') + '">\n';
 			// TEXT
 			xmldata += '			<text><![CDATA[' + $(this).attr('text') + ']]></text>\n';
 			// IMAGE (if defined)
@@ -198,7 +203,7 @@ function imb_save_book_content(bidx) {
 			}
 			// TRANSITIONS
 			$.each($(this).attr('transition_list'), function() {
-				xmldata += '			<transition type_id="' + cleanXML($(this).attr('type')) + '" variable_idx="' + cleanXML($(this).attr('variable_idx')) + '" trigger="' + cleanXML($(this).attr('trigger')) + '" next_state_idx="' + cleanXML($(this).attr('next_state_idx')) + '" label="' + cleanXML($(this).attr('label')) + '" scenario_id="' + cleanXML($(this).attr('scenario_id')) + (($(this).attr('nlp_min_match') != undefined) ? '" nlp_min_match="' + cleanXML($(this).attr('nlp_min_match')) : '') + '">\n';
+				xmldata += '			<transition type_id="' + cleanXML($(this).attr('type')) + '" variable_idx="' + cleanXML($(this).attr('variable_idx')) + '" trigger="' + cleanXML($(this).attr('trigger')) + '" next_state_idx="' + cleanXML($(this).attr('next_state_idx')) + '" label="' + cleanXML($(this).attr('label')) + '" scenario_id="' + cleanXML($(this).attr('scenario_id')) + '">\n';
 				// RESPONSES
 				$.each($(this).attr('response_list'), function() {
 					xmldata += '				<response type_id="' + cleanXML($(this).attr('type')) + '" sound="' + cleanXML($(this).attr('sound')) + '" weight="' + cleanXML($(this).attr('weight')) + '" bits="' + cleanXML($(this).attr('bits')) + '" asub="' + cleanXML($(this).attr('asub')) + '">\n';
