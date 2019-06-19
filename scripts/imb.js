@@ -1462,7 +1462,13 @@ function imb_transition_check_response(inftxt) {
                         transition.count++; // increment the transition count
                         if (response.count == 1 || vpf_text != '') { // only count this response ONE time if NOT of VPF origin
                             page.score = parseInt(page.score) + parseInt(response.weight);  // increment the user page score by the weight of the response (if any) ONCE
-                            imb_archive(book.book_id, book.page_list_idx, page.state_list_idx, inftxt, response.type, response.weight); // new positive match
+							if ((transition.type == 7) && !isNaN(nlp_match_score * 100)) {
+								// record NLP match, with weight as server response
+								imb_archive(book.book_id, book.page_list_idx, page.state_list_idx, inftxt, response.type, nlp_match_score * 100);
+							} else {
+								// record new positive match
+								imb_archive(book.book_id, book.page_list_idx, page.state_list_idx, inftxt, response.type, response.weight);
+							}
                         }
                         if (vpf_text != '') { // got VPF response!
                             add_game_message(vpf_text, get_book_avatar(page, response.characters.output_char, response.characters.output_avatar)); // display vpf output
